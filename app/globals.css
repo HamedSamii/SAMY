@@ -1,26 +1,37 @@
 @import "tailwindcss";
 
 :root {
-  --background: #ffffff;
-  --foreground: #171717;
+  --purple: #7f77dd;
+  --coral: #d85a30;
+  --green: #1d9e75;
+  --amber: #ef9f27;
+  --bg: #0a0a0f;
+  --surface: #13131a;
+  --surface2: #1c1c28;
+  --border: rgba(255, 255, 255, 0.07);
+  --text: #f0eff8;
+  --muted: rgba(240, 239, 248, 0.45);
+}
+
+html[lang="ar"] {
+  --font-body: var(--font-ibm-plex-arabic), "IBM Plex Sans Arabic", sans-serif;
+}
+
+html[lang="en"] {
+  --font-body: var(--font-ibm-plex), "IBM Plex Sans", sans-serif;
 }
 
 @theme inline {
-  --color-background: var(--background);
-  --color-foreground: var(--foreground);
-  --font-sans: var(--font-geist-sans);
-  --font-mono: var(--font-geist-mono);
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-  }
+  --font-sans: var(--font-body);
+  --font-mono: var(--font-body);
 }
 
 body {
-  background: var(--background);
-  color: var(--foreground);
-  font-family: Arial, Helvetica, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+}
+
+a {
+  color: inherit;
 }

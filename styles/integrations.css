@@ -1,0 +1,25 @@
+@keyframes integrations-dot-drift {
+  0% {
+    transform: translate(0, 0);
+  }
+  100% {
+    transform: translate(28px, 28px);
+  }
+}
+
+.integrations-dot-grid {
+  animation: integrations-dot-drift 20s linear infinite;
+}
+
+.integrations-cta-border::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: 1rem;
+  padding: 1px;
+  background: linear-gradient(135deg, var(--purple), rgba(127, 119, 221, 0.2), var(--purple));
+  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+  -webkit-mask-composite: xor;
+  mask-composite: exclude;
+  pointer-events: none;
+}
