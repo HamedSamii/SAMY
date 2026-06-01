@@ -1,16 +1,19 @@
+"use client";
+
 import Link from "next/link";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getPricingPageCopy } from "@/lib/pricing-i18n";
 
 export function CTASection() {
+  const { lang } = useLanguage();
+  const copy = getPricingPageCopy(lang).ctaSection;
+
   return (
     <div className="cta-section">
       <div className="cta-glow-1" aria-hidden />
       <div className="cta-glow-2" aria-hidden />
-      <h2>
-        Ready to automate
-        <br />
-        your business?
-      </h2>
-      <p>Join hundreds of businesses across the Gulf using Samy.</p>
+      <h2>{copy.title}</h2>
+      <p>{copy.sub}</p>
       <div className="cta-btns">
         <Link
           href="https://app.samy.agency/register"
@@ -18,16 +21,14 @@ export function CTASection() {
           rel="noopener noreferrer"
           className="cta-btn-primary"
         >
-          Start Free Trial — 14 Days
+          {copy.primaryCta}
         </Link>
         <Link href="/contact" className="cta-btn-outline">
-          Book a Demo
+          {copy.secondaryCta}
         </Link>
       </div>
       <div className="social-proof">
-        <span className="stars">★★★★★</span>
-        {" "}
-        Trusted by 200+ businesses in KSA, UAE &amp; Egypt
+        <span className="stars">★★★★★</span> {copy.socialProof}
       </div>
     </div>
   );

@@ -19,12 +19,17 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     pathname === "/automation" ||
     pathname === "/cases" ||
     pathname === "/academy" ||
-    pathname.startsWith("/academy/");
+    pathname === "/integrations" ||
+    pathname === "/contact" ||
+    pathname.startsWith("/academy/") ||
+    pathname.startsWith("/cases/");
   const flushUnderNav =
     pathname === "/cases" ||
     pathname.startsWith("/cases/") ||
     pathname === "/academy" ||
-    pathname.startsWith("/academy/");
+    pathname.startsWith("/academy/") ||
+    pathname === "/integrations" ||
+    pathname === "/contact";
 
   return (
     <>

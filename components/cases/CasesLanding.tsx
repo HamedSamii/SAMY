@@ -5,11 +5,15 @@ import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 import { CaseCardCover } from "@/components/cases/CaseCardCover";
 import { CaseStudyModal } from "@/components/cases/CaseStudyModal";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { caseIndexCards, getCaseById, type CaseStudy } from "@/lib/cases-index-data";
+import { getCasesPageCopy } from "@/lib/marketing-pages-copy";
 
 import "@/styles/cases.css";
 
 export function CasesLanding() {
+  const { lang } = useLanguage();
+  const t = getCasesPageCopy(lang);
   const router = useRouter();
   const searchParams = useSearchParams();
   const [activeStudy, setActiveStudy] = useState<CaseStudy | null>(null);
@@ -46,16 +50,13 @@ export function CasesLanding() {
   return (
     <div className="cases-page">
       <section className="page-hero page-hero-centered">
-        <div className="hero-kicker">Case Studies</div>
+        <div className="hero-kicker">{t.kicker}</div>
         <h1>
-          Real businesses.
+          {t.titleLine1}
           <br />
-          <em>Real results.</em>
+          <em>{t.titleEm}</em>
         </h1>
-        <p>
-          See how brands across Egypt, Iraq, and the Gulf use SAMY-powered chatbots to automate sales,
-          qualify leads, and deliver better customer experiences — around the clock.
-        </p>
+        <p>{t.sub}</p>
       </section>
 
       <section className="cases-section">
@@ -100,7 +101,7 @@ export function CasesLanding() {
                         </span>
                       ))}
                     </div>
-                    <span className="read-more">Read case →</span>
+                    <span className="read-more">{t.readCase}</span>
                   </div>
                 </div>
               </article>
@@ -110,14 +111,14 @@ export function CasesLanding() {
       </section>
 
       <section className="cta-strip">
-        <h2>Your business could be next.</h2>
-        <p>Book a free discovery call — we&apos;ll map out your automation and show you what&apos;s possible.</p>
+        <h2>{t.ctaTitle}</h2>
+        <p>{t.ctaSub}</p>
         <div className="cta-actions">
           <Link href="/contact" className="btn-p">
-            Book a Free Call
+            {t.ctaPrimary}
           </Link>
           <Link href="/contact" className="btn-g">
-            WhatsApp Us ↗
+            {t.ctaSecondary}
           </Link>
         </div>
       </section>

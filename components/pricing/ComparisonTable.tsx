@@ -1,16 +1,20 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import {
-  comparisonSections,
   comparisonPlanKeys,
-  comparisonPlanLabels,
   comparisonPlanColors,
   planPrices,
   getYearlyPrice,
   type ComparisonCell,
   type ComparisonPlanKey,
 } from "@/lib/pricing-data";
+import {
+  getComparisonPlanLabels,
+  getComparisonSections,
+  getPricingPageCopy,
+} from "@/lib/pricing-i18n";
 
 type BillingCycle = "monthly" | "yearly";
 
@@ -72,6 +76,11 @@ function getHeaderPrice(planId: ComparisonPlanKey, billingCycle: BillingCycle): 
 }
 
 export function ComparisonTable({ billingCycle }: ComparisonTableProps) {
+  const { lang } = useLanguage();
+  const pageCopy = getPricingPageCopy(lang);
+  const comparisonSections = getComparisonSections(lang);
+  const comparisonPlanLabels = getComparisonPlanLabels(lang);
+
   const [openSections, setOpenSections] = useState<boolean[]>(
     () => comparisonSections.map(() => true),
   );
@@ -86,12 +95,12 @@ export function ComparisonTable({ billingCycle }: ComparisonTableProps) {
 
   return (
     <>
-      <div className="section-title">Full Plan Comparison</div>
-      <div className="section-sub">See exactly what&apos;s included in every plan.</div>
+      <div className="section-title">{pageCopy.comparison.title}</div>
+      <div className="section-sub">{pageCopy.comparison.subtitle}</div>
 
       <div className="comparison-wrap">
         <div className="table-header">
-          <div className="th-label">Features</div>
+          <div className="th-label">{pageCopy.comparison.featuresLabel}</div>
           {comparisonPlanKeys.map((key) => (
             <div
               key={key}

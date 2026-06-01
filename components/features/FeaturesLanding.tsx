@@ -4,6 +4,8 @@ import Link from "next/link";
 import Script from "next/script";
 import { FeaturesBgCanvas } from "@/components/features/FeaturesBgCanvas";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getFeaturesHeroCopy } from "@/lib/features-copy";
+import { dirForLang } from "@/lib/locale";
 
 import "@/styles/features-landing.css";
 
@@ -38,7 +40,8 @@ const ANALYTICS_BAR_HEIGHTS = [30, 50, 40, 68, 52, 82, 62, 90, 72, 78, 85, 92];
 /** Full-page marketing features from Designs/samy_features_v2.html */
 export function FeaturesLanding() {
   const { lang } = useLanguage();
-  const dir = lang === "ar" ? "rtl" : "ltr";
+  const dir = dirForLang(lang);
+  const hero = getFeaturesHeroCopy(lang);
 
   return (
     <div id="feat-page-root" className="feat-scope relative z-0 font-sans" dir={dir}>
@@ -46,29 +49,29 @@ export function FeaturesLanding() {
       <Script src="/samy-features-v2.js" strategy="afterInteractive" />
 
       <div className="page-hero fu">
-        <div className="feat-chip">★ ALL FEATURES</div>
+        <div className="feat-chip">{hero.chip}</div>
         <h1 className="page-title">
-          Everything your bot needs
+          {hero.titleLine1}
           <br />
-          to <em>perform</em>
+          <em>{hero.titleEm}</em>
         </h1>
-        <p className="page-sub">6 complete systems — each one built for real businesses. Click any card to explore.</p>
+        <p className="page-sub">{hero.sub}</p>
         <div className="counters">
           <div className="counter-item">
             <div className="counter-num">15+</div>
-            <div className="counter-lbl">Channels</div>
+            <div className="counter-lbl">{hero.counters.channels}</div>
           </div>
           <div className="counter-item">
             <div className="counter-num">30+</div>
-            <div className="counter-lbl">Integrations</div>
+            <div className="counter-lbl">{hero.counters.integrations}</div>
           </div>
           <div className="counter-item">
             <div className="counter-num">7</div>
-            <div className="counter-lbl">Node types</div>
+            <div className="counter-lbl">{hero.counters.nodes}</div>
           </div>
           <div className="counter-item">
             <div className="counter-num">∞</div>
-            <div className="counter-lbl">Conversations</div>
+            <div className="counter-lbl">{hero.counters.conversations}</div>
           </div>
         </div>
       </div>
@@ -82,7 +85,7 @@ export function FeaturesLanding() {
           onKeyDown={(e) => e.key === "Enter" && window.filterCat?.("all", e.currentTarget)}
         >
           <div className="cat-dot" style={{ background: "var(--purple)" }} />
-          All
+          {hero.categories.all}
         </div>
         <div
           className="cat-pill"
@@ -92,7 +95,7 @@ export function FeaturesLanding() {
           onKeyDown={(e) => e.key === "Enter" && window.filterCat?.("automation", e.currentTarget)}
         >
           <div className="cat-dot" style={{ background: "var(--amber)" }} />
-          Automation
+          {hero.categories.automation}
         </div>
         <div
           className="cat-pill"
@@ -102,7 +105,7 @@ export function FeaturesLanding() {
           onKeyDown={(e) => e.key === "Enter" && window.filterCat?.("ai", e.currentTarget)}
         >
           <div className="cat-dot" style={{ background: "var(--blue)" }} />
-          AI
+          {hero.categories.ai}
         </div>
         <div
           className="cat-pill"
@@ -112,7 +115,7 @@ export function FeaturesLanding() {
           onKeyDown={(e) => e.key === "Enter" && window.filterCat?.("channels", e.currentTarget)}
         >
           <div className="cat-dot" style={{ background: "var(--green)" }} />
-          Channels
+          {hero.categories.channels}
         </div>
         <div
           className="cat-pill"
@@ -122,7 +125,7 @@ export function FeaturesLanding() {
           onKeyDown={(e) => e.key === "Enter" && window.filterCat?.("analytics", e.currentTarget)}
         >
           <div className="cat-dot" style={{ background: "var(--coral)" }} />
-          Analytics
+          {hero.categories.analytics}
         </div>
       </div>
 

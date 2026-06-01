@@ -8,6 +8,9 @@ import {
   type AcademyCourse,
   type CourseCategory,
 } from "@/data/courses";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getAcademyPageCopy } from "@/lib/marketing-pages-copy";
+import { arrow } from "@/lib/locale";
 
 import "@/styles/academy.css";
 
@@ -24,16 +27,11 @@ function matchesSearch(course: AcademyCourse, query: string): boolean {
   );
 }
 
-function lessonLabel(course: AcademyCourse): string | null {
-  if (course.videoCount) return course.videoCount;
-  if (course.lessonCount > 0) {
-    return `${course.lessonCount} lesson${course.lessonCount !== 1 ? "s" : ""}`;
-  }
-  return null;
-}
-
-function CourseCard({ course }: { course: AcademyCourse }) {
-  const countLabel = lessonLabel(course);
+function CourseCard({ course, copy }: { course: AcademyCourse; copy: ReturnType<typeof getAcademyPageCopy> }) {
+  const { lang } = useLanguage();
+  let countLabel: string | null = null;
+  if (course.videoCount) countLabel = course.videoCount;
+  else if (course.lessonCount > 0) countLabel = copy.lessonCount(course.lessonCount);
 
   return (
     <Link href={`/academy/${course.slug}`} className="academy-card">
@@ -41,9 +39,9 @@ function CourseCard({ course }: { course: AcademyCourse }) {
       <div className="academy-card-desc">{course.description}</div>
       <div className="academy-card-foot">
         {countLabel ? <span className="academy-tag-vids">{countLabel}</span> : null}
-        {course.isFree ? <span className="academy-tag-free">Free</span> : null}
+        {course.isFree ? <span className="academy-tag-free">{copy.free}</span> : null}
         <span className="academy-card-arrow" aria-hidden>
-          →
+          {arrow(lang, "forward")}
         </span>
       </div>
     </Link>
@@ -51,6 +49,8 @@ function CourseCard({ course }: { course: AcademyCourse }) {
 }
 
 export function AcademyLanding() {
+  const { lang } = useLanguage();
+  const copy = getAcademyPageCopy(lang);
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<FilterKey>("All");
 
@@ -76,28 +76,26 @@ export function AcademyLanding() {
   return (
     <div className="academy-page">
       <section className="academy-hero">
-        <div className="academy-badge">Samy Training Hub</div>
+        <div className="academy-badge">{copy.badge}</div>
         <h1>
-          Learn <em>Samy</em> from Scratch
+          {copy.titleLine1}
+          <em>{copy.titleEm}</em>
           <br />
-          to Advanced
+          {copy.titleLine2}
         </h1>
-        <p>
-          Free hands-on courses covering chatbot automation, AI agents, omnichannel integrations, and
-          everything in between.
-        </p>
+        <p>{copy.sub}</p>
       </section>
 
       <div className="academy-toolbar">
         <input
           type="search"
           className="academy-search"
-          placeholder="Search courses…"
+          placeholder={copy.searchPlaceholder}
           value={query}
           onChange={(e) => setQuery(e.target.value)}
-          aria-label="Search courses"
+          aria-label={copy.searchPlaceholder}
         />
-        <div className="academy-filters" role="tablist" aria-label="Course categories">
+        <div className="academy-filters" role="tablist" aria-label={copy.searchPlaceholder}>
           {filters.map((key) => (
             <button
               key={key}
@@ -107,7 +105,7 @@ export function AcademyLanding() {
               className={`academy-filter-btn${category === key ? " is-active" : ""}`}
               onClick={() => setCategory(key)}
             >
-              {key === "All" ? "All Courses" : key}
+              {key === "All" ? copy.allCourses : key}
             </button>
           ))}
         </div>
@@ -115,20 +113,18 @@ export function AcademyLanding() {
 
       <div className="academy-wrap">
         {filtered.length === 0 ? (
-          <p className="academy-empty">No courses match your search. Try a different keyword or category.</p>
+          <p className="academy-empty">{copy.empty}</p>
         ) : (
           grouped.map((group) => (
             <section key={group.name} className="academy-cat">
               <div className="academy-cat-head">
-                <span className="academy-cat-tag">Level</span>
+                <span className="academy-cat-tag">{copy.levelTag}</span>
                 <span className="academy-cat-name">{group.name}</span>
-                <span className="academy-cat-count">
-                  {group.items.length} Course{group.items.length !== 1 ? "s" : ""}
-                </span>
+                <span className="academy-cat-count">{copy.courseCount(group.items.length)}</span>
               </div>
               <div className="academy-grid">
                 {group.items.map((course) => (
-                  <CourseCard key={course.slug} course={course} />
+                  <CourseCard key={course.slug} course={course} copy={copy} />
                 ))}
               </div>
             </section>

@@ -3,16 +3,10 @@
 import { useState } from "react";
 import Link from "next/link";
 import { AutomationHeroCanvas } from "@/components/automation/AutomationHeroCanvas";
-import {
-  bookingSteps,
-  caseTabs,
-  pillars,
-  tools,
-  useCases,
-  type CaseCategory,
-  type FlowStepColor,
-  type ToolBadge,
-} from "@/lib/automation-data";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getAutomationContent } from "@/lib/automation-i18n";
+import type { CaseCategory, FlowStepColor, ToolBadge } from "@/lib/automation-data";
+import { dirForLang } from "@/lib/locale";
 
 import "@/styles/automation.css";
 
@@ -49,51 +43,53 @@ function scrollToCases() {
 }
 
 export function AutomationLanding() {
+  const { lang } = useLanguage();
+  const t = getAutomationContent(lang);
+  const dir = dirForLang(lang);
   const [activeCategory, setActiveCategory] = useState<CaseCategory | "all">("all");
 
   const isCaseVisible = (category: CaseCategory) =>
     activeCategory === "all" || activeCategory === category;
 
   return (
-    <div dir="ltr" className="automation-page">
+    <div dir={dir} className="automation-page">
       <section className="hero">
-        <AutomationHeroCanvas />
+        <div dir="ltr" className="automation-hero-canvas">
+          <AutomationHeroCanvas />
+        </div>
         <div className="hero-content">
           <div className="hero-badge">
             <span className="dot" />
-            <span>Automation Add-ons</span>
+            <span>{t.heroBadge}</span>
           </div>
           <h1>
-            Your chatbot, <span className="dim">connected to</span> <span className="accent">everything.</span>
+            {t.heroTitleLead} <span className="dim">{t.heroTitleDim}</span>{" "}
+            <span className="accent">{t.heroTitleAccent}</span>
           </h1>
-          <p className="hero-sub">
-            SAMY runs your conversations. We build the automation layer behind it — the pipelines, triggers, and
-            workflows that make your whole business run on autopilot.
-          </p>
+          <p className="hero-sub">{t.heroSub}</p>
           <div className="hero-actions">
             <Link href="/contact" className="btn-primary">
-              Book a Free Discovery Call
+              {t.heroPrimaryCta}
             </Link>
             <button type="button" className="btn-ghost" onClick={scrollToCases}>
-              Explore Use Cases ↓
+              {t.heroSecondaryCta}
             </button>
           </div>
         </div>
       </section>
 
       <section className="pillars-section">
-        <div className="section-label">What we build</div>
+        <div className="section-label">{t.pillarsLabel}</div>
         <h2 className="section-title">
-          Three types of
+          {t.pillarsTitleLine1}
           <br />
-          automation we add
+          {t.pillarsTitleLine2}
         </h2>
         <p className="section-sub" style={{ marginBottom: 40 }}>
-          These workflows live outside the chatbot — they feed it, extend it, and connect it to everything else in
-          your business.
+          {t.pillarsSub}
         </p>
         <div className="pillars-grid">
-          {pillars.map((pillar) => (
+          {t.pillars.map((pillar) => (
             <div key={pillar.num} className="pillar">
               <div className="pillar-num">{pillar.num}</div>
               <h3>{pillar.title}</h3>
@@ -104,14 +100,14 @@ export function AutomationLanding() {
       </section>
 
       <section className="cases-section" id="cases">
-        <div className="section-label">Real Use Cases</div>
+        <div className="section-label">{t.casesLabel}</div>
         <h2 className="section-title">
-          Automations we&apos;ve
+          {t.casesTitleLine1}
           <br />
-          built for clients
+          {t.casesTitleLine2}
         </h2>
         <div className="cases-tabs">
-          {caseTabs.map((tab) => (
+          {t.caseTabs.map((tab) => (
             <button
               key={tab.key}
               type="button"
@@ -123,7 +119,7 @@ export function AutomationLanding() {
           ))}
         </div>
         <div className="cases-grid" id="cases-grid">
-          {useCases.map((useCase) => (
+          {t.useCases.map((useCase) => (
             <div
               key={useCase.id}
               className={`case-card${isCaseVisible(useCase.category) ? "" : " hidden"}`}
@@ -150,14 +146,14 @@ export function AutomationLanding() {
       </section>
 
       <section className="tools-section">
-        <div className="section-label">Our Stack</div>
+        <div className="section-label">{t.toolsLabel}</div>
         <h2 className="section-title">
-          Tools we use to
+          {t.toolsTitleLine1}
           <br />
-          build your pipeline
+          {t.toolsTitleLine2}
         </h2>
         <div className="tools-grid">
-          {tools.map((tool) => (
+          {t.tools.map((tool) => (
             <div key={tool.id} className="tool-card">
               <div className={`tool-icon ${tool.iconClass}`}>{tool.icon}</div>
               <h3>{tool.title}</h3>
@@ -177,25 +173,19 @@ export function AutomationLanding() {
       <section className="pricing-section">
         <div className="pricing-section-inner">
           <div className="pricing-header">
-            <div className="section-label">Pricing</div>
+            <div className="section-label">{t.pricingLabel}</div>
             <h2 className="section-title">
-              Every project is scoped
+              {t.pricingTitleLine1}
               <br />
-              on a discovery call
+              {t.pricingTitleLine2}
             </h2>
-            <p className="pricing-header-desc">
-              Automation complexity varies. A simple flow takes 2 hours. A full AI content pipeline takes 2 weeks. We
-              scope it with you — you pay only for what you need.
-            </p>
+            <p className="pricing-header-desc">{t.pricingHeaderDesc}</p>
           </div>
           <div className="pricing-cta-card">
-            <h2>Let&apos;s scope your workflow</h2>
-            <p>
-              Tell us what you want to automate — we&apos;ll map it out, recommend the right tools, and give you a clear
-              quote.
-            </p>
+            <h2>{t.pricingCardTitle}</h2>
+            <p>{t.pricingCardDesc}</p>
             <div className="pricing-steps">
-              {bookingSteps.map((step) => (
+              {t.bookingSteps.map((step) => (
                 <div key={step.num} className="p-step">
                   <div className="p-step-num">{step.num}</div>
                   <div className="p-step-title">{step.title}</div>
@@ -204,26 +194,26 @@ export function AutomationLanding() {
               ))}
             </div>
             <Link href="/contact" className="book-btn">
-              📅 Book a Free Discovery Call
+              {t.pricingBookCta}
             </Link>
             <Link href="/contact" className="wa-btn">
               <WhatsAppIcon />
-              Chat on WhatsApp instead
+              {t.pricingWhatsAppCta}
             </Link>
-            <div className="pricing-note">No fixed pricing — scoped per project after the call</div>
+            <div className="pricing-note">{t.pricingNote}</div>
           </div>
         </div>
       </section>
 
       <section className="cta-section">
-        <h2>Got a workflow in mind?</h2>
-        <p>Tell us what you want to automate — we&apos;ll figure out how to build it.</p>
+        <h2>{t.ctaTitle}</h2>
+        <p>{t.ctaSub}</p>
         <div className="cta-actions">
           <Link href="/contact" className="btn-primary" style={{ fontSize: 15, padding: "15px 34px" }}>
-            Book a Free Call
+            {t.ctaPrimary}
           </Link>
           <Link href="/contact" className="btn-ghost" style={{ fontSize: 15, padding: "15px 34px" }}>
-            WhatsApp Us ↗
+            {t.ctaSecondary}
           </Link>
         </div>
       </section>

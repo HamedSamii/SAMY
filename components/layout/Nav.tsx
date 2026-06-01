@@ -2,9 +2,11 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { useEffect, useState } from "react";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { homeLandingCopy, type HomeLang } from "@/lib/homeLandingCopy";
 import { marketingNavRoutes } from "@/lib/marketingNav";
+import { dirForLang } from "@/lib/locale";
 
 import "@/styles/marketing-nav.css";
 
@@ -47,7 +49,19 @@ export function Nav() {
   const { lang: siteLang, setLang } = useLanguage();
   const lg: HomeLang = siteLang === "ar" ? "ar" : "en";
   const t = homeLandingCopy[lg];
-  const dir = lg === "ar" ? "rtl" : "ltr";
+  const dir = dirForLang(lg);
+  const [mobileOpen, setMobileOpen] = useState(false);
+
+  useEffect(() => {
+    setMobileOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    document.body.style.overflow = mobileOpen ? "hidden" : "";
+    return () => {
+      document.body.style.overflow = "";
+    };
+  }, [mobileOpen]);
 
   return (
     <div className="samy-marketing-nav" dir={dir}>
@@ -84,8 +98,48 @@ export function Nav() {
           <Link href="https://app.samy.agency" className="hp-btn-build">
             {t.btnBuild}
           </Link>
+          <button
+            type="button"
+            className="hp-mobile-toggle"
+            aria-expanded={mobileOpen}
+            aria-label={lg === "ar" ? "القائمة" : "Menu"}
+            onClick={() => setMobileOpen((open) => !open)}
+          >
+            <span />
+            <span />
+            <span />
+          </button>
         </div>
       </nav>
+
+      <div className={`hp-mobile-menu${mobileOpen ? " is-open" : ""}`} dir={dir} aria-hidden={!mobileOpen}>
+        {t.navLinks.map((label, i) => {
+          const href = marketingNavRoutes[i];
+          const isActive =
+            href === "/"
+              ? pathname === "/"
+              : pathname === href || pathname.startsWith(`${href}/`);
+          return (
+            <Link
+              key={`mobile-${label}`}
+              href={href}
+              className={isActive ? "active" : undefined}
+              onClick={() => setMobileOpen(false)}
+              tabIndex={mobileOpen ? undefined : -1}
+            >
+              {label}
+            </Link>
+          );
+        })}
+        <Link
+          href="https://app.samy.agency"
+          className="hp-mobile-menu-btn"
+          onClick={() => setMobileOpen(false)}
+          tabIndex={mobileOpen ? undefined : -1}
+        >
+          {t.btnBuild}
+        </Link>
+      </div>
     </div>
   );
 }

@@ -1,10 +1,16 @@
+"use client";
+
 import Link from "next/link";
 import type { CaseStudy } from "@/lib/cases-index-data";
 import { CaseCardCover } from "@/components/cases/CaseCardCover";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getCasesPageCopy } from "@/lib/marketing-pages-copy";
 
 import "@/styles/cases.css";
 
 export function CaseStudyDetail({ study }: { study: CaseStudy }) {
+  const { lang } = useLanguage();
+  const t = getCasesPageCopy(lang);
   const buildHref = `/build-agent?prompt=${encodeURIComponent(`I want a bot similar to: ${study.listTitle}`)}`;
   const { detail } = study;
 
@@ -12,7 +18,7 @@ export function CaseStudyDetail({ study }: { study: CaseStudy }) {
     <div className="cases-page case-detail-page">
       <div className="case-detail-top">
         <Link href="/cases" className="case-detail-back">
-          ← All case studies
+          {t.backToAll}
         </Link>
       </div>
 
@@ -34,12 +40,12 @@ export function CaseStudyDetail({ study }: { study: CaseStudy }) {
 
       <article className="case-detail-content">
         <section className="case-detail-block">
-          <h2 className="case-detail-label">Background</h2>
+          <h2 className="case-detail-label">{t.background}</h2>
           <p>{detail.background}</p>
         </section>
 
         <section className="case-detail-block">
-          <h2 className="case-detail-label">Challenges</h2>
+          <h2 className="case-detail-label">{t.challenges}</h2>
           <ul className="case-detail-challenges">
             {detail.challenges.map((c) => (
               <li key={c}>{c}</li>
@@ -48,7 +54,7 @@ export function CaseStudyDetail({ study }: { study: CaseStudy }) {
         </section>
 
         <section className="case-detail-block">
-          <h2 className="case-detail-label">How we built it</h2>
+          <h2 className="case-detail-label">{t.howBuilt}</h2>
           <ol className="case-detail-flow">
             {detail.flow.map((step, i) => (
               <li key={step}>
@@ -71,14 +77,14 @@ export function CaseStudyDetail({ study }: { study: CaseStudy }) {
       </article>
 
       <section className="cta-strip case-detail-cta">
-        <h2>Want similar results for your business?</h2>
-        <p>We&apos;ll map your workflow and show you what a SAMY-powered bot can automate.</p>
+        <h2>{t.detailCtaTitle}</h2>
+        <p>{t.detailCtaSub}</p>
         <div className="cta-actions">
           <Link href={buildHref} className="btn-p">
-            Build a similar bot ↗
+            {t.buildSimilar}
           </Link>
           <Link href="/contact" className="btn-g">
-            Book a Free Call
+            {t.ctaPrimary}
           </Link>
         </div>
       </section>

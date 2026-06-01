@@ -1,7 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { faqs } from "@/lib/pricing-data";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getFaqs, getPricingPageCopy } from "@/lib/pricing-i18n";
 
 function FaqChevron({ open }: { open: boolean }) {
   return (
@@ -20,11 +21,14 @@ function FaqChevron({ open }: { open: boolean }) {
 }
 
 export function FAQSection() {
+  const { lang } = useLanguage();
+  const pageCopy = getPricingPageCopy(lang);
+  const faqs = getFaqs(lang);
   const [openIndex, setOpenIndex] = useState<number | null>(null);
 
   return (
     <div className="faq-section">
-      <div className="section-title">Frequently Asked Questions</div>
+      <div className="section-title">{pageCopy.faqTitle}</div>
 
       <div>
         {faqs.map((faq, index) => {

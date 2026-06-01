@@ -138,7 +138,7 @@
 }
 
 .academy-page .academy-cat-count {
-  margin-left: auto;
+  margin-inline-start: auto;
   background: var(--academy-gold-dim);
   border: 1px solid var(--academy-gold-border);
   color: var(--academy-gold);
@@ -231,7 +231,7 @@
 }
 
 .academy-page .academy-card-arrow {
-  margin-left: auto;
+  margin-inline-start: auto;
   color: var(--academy-gold);
   font-size: 16px;
   opacity: 0.7;
@@ -241,6 +241,10 @@
 .academy-page .academy-card:hover .academy-card-arrow {
   opacity: 1;
   transform: translateX(3px);
+}
+
+html[lang="ar"] .academy-page .academy-card:hover .academy-card-arrow {
+  transform: translateX(-3px);
 }
 
 .academy-page .academy-empty {

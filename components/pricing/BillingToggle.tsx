@@ -1,5 +1,8 @@
 "use client";
 
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getPricingPageCopy } from "@/lib/pricing-i18n";
+
 type BillingCycle = "monthly" | "yearly";
 
 type BillingToggleProps = {
@@ -8,6 +11,8 @@ type BillingToggleProps = {
 };
 
 export function BillingToggle({ billingCycle, onChange }: BillingToggleProps) {
+  const { lang } = useLanguage();
+  const copy = getPricingPageCopy(lang);
   const isYearly = billingCycle === "yearly";
 
   return (
@@ -18,18 +23,18 @@ export function BillingToggle({ billingCycle, onChange }: BillingToggleProps) {
           className={`toggle-btn${!isYearly ? " active" : ""}`}
           onClick={() => onChange("monthly")}
         >
-          Monthly
+          {copy.billingToggle.monthly}
         </button>
         <button
           type="button"
           className={`toggle-btn${isYearly ? " active" : ""}`}
           onClick={() => onChange("yearly")}
         >
-          Yearly
+          {copy.billingToggle.yearly}
         </button>
       </div>
       <span className="save-badge" style={{ opacity: isYearly ? 1 : 0.4 }}>
-        Save 10%
+        {copy.billingToggle.save}
       </span>
     </div>
   );

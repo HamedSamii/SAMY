@@ -78,7 +78,7 @@
 }
 
 .cases-page .stats-row .stat + .stat {
-  border-left: 1px solid var(--cases-border);
+  border-inline-start: 1px solid var(--cases-border);
 }
 
 .cases-page .stats-row .stat-num {
@@ -191,7 +191,7 @@
   font-size: 12px;
   font-family: var(--font-body);
   color: var(--cases-text3);
-  margin-right: 4px;
+  margin-inline-end: 4px;
 }
 
 .cases-page .pill {
@@ -508,7 +508,7 @@
 }
 
 .cases-page .metric + .metric {
-  border-left: 1px solid var(--cases-border);
+  border-inline-start: 1px solid var(--cases-border);
 }
 
 .cases-page .metric-val {
@@ -855,7 +855,7 @@
 }
 
 .cases-page .mm + .mm {
-  border-left: 1px solid var(--cases-border);
+  border-inline-start: 1px solid var(--cases-border);
 }
 
 .cases-page .mm-v {

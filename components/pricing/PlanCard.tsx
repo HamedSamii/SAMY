@@ -1,14 +1,16 @@
 import Link from "next/link";
 import { type Plan, getYearlyPrice } from "@/lib/pricing-data";
+import type { PricingPageCopy } from "@/lib/pricing-i18n";
 
 type BillingCycle = "monthly" | "yearly";
 
 type PlanCardProps = {
   plan: Plan;
   billingCycle: BillingCycle;
+  labels: PricingPageCopy["planCard"];
 };
 
-export function PlanCard({ plan, billingCycle }: PlanCardProps) {
+export function PlanCard({ plan, billingCycle, labels }: PlanCardProps) {
   const isYearly = billingCycle === "yearly";
   const isExternal = plan.ctaHref.startsWith("http");
 
@@ -24,7 +26,7 @@ export function PlanCard({ plan, billingCycle }: PlanCardProps) {
 
   return (
     <div className={cardClass} style={cardStyle}>
-      {plan.highlight && <div className="popular-badge">✦ Most Popular</div>}
+      {plan.highlight && <div className="popular-badge">✦ {labels.popularBadge}</div>}
 
       <div
         className="plan-name"
@@ -41,13 +43,15 @@ export function PlanCard({ plan, billingCycle }: PlanCardProps) {
           <span className="period">/mo</span>
         </div>
       </div>
-      <div className="plan-billing">{isYearly ? "billed annually" : "billed monthly"}</div>
+      <div className="plan-billing">
+        {isYearly ? labels.billedAnnually(plan.monthlyPrice) : labels.billedMonthly}
+      </div>
 
       <span
         className="contacts-badge"
         style={{ background: plan.accentDim, color: plan.accentColor }}
       >
-        {plan.contacts} Contacts
+        {plan.contacts} {labels.contactsLabel}
       </span>
 
       <div className="divider" />

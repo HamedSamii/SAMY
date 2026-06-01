@@ -1251,12 +1251,6 @@
 }
 
 /* RTL */
-.samy-home-page[dir="rtl"] .hp-nav-links {
-  flex-direction: row-reverse;
-}
-.samy-home-page[dir="rtl"] .hp-nav-right {
-  flex-direction: row-reverse;
-}
 .samy-home-page[dir="rtl"] .hp-hero {
   direction: rtl;
 }

@@ -1,30 +1,34 @@
 "use client";
 
 import { useState } from "react";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import { BillingToggle } from "@/components/pricing/BillingToggle";
 import { PlansGrid } from "@/components/pricing/PlansGrid";
 import { ComparisonTable } from "@/components/pricing/ComparisonTable";
 import { FAQSection } from "@/components/pricing/FAQSection";
 import { CTASection } from "@/components/pricing/CTASection";
+import { getPricingPageCopy } from "@/lib/pricing-i18n";
 
 import "@/styles/pricing.css";
 
 type BillingCycle = "monthly" | "yearly";
 
 export function PricingPageContent() {
+  const { lang } = useLanguage();
+  const copy = getPricingPageCopy(lang);
   const [billingCycle, setBillingCycle] = useState<BillingCycle>("monthly");
 
   return (
     <div className="pricing-page">
       <div className="hero">
         <div className="hero-glow" aria-hidden />
-        <div className="eyebrow">Simple, Transparent Pricing</div>
+        <div className="eyebrow">{copy.hero.eyebrow}</div>
         <h1>
-          The right plan for
+          {copy.hero.h1}
           <br />
-          your <span>business</span>
+          <span>{copy.hero.h1Accent}</span>
         </h1>
-        <p>Start free for 14 days. No credit card required.</p>
+        <p>{copy.hero.sub}</p>
         <BillingToggle billingCycle={billingCycle} onChange={setBillingCycle} />
       </div>
 

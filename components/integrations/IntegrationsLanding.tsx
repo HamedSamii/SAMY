@@ -1,15 +1,21 @@
 "use client";
 
-import { useMemo, useState } from "react";
 import Link from "next/link";
+import { useMemo, useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
 import { integrations, type FilterKey } from "@/lib/integrations-data";
 import { FilterBar } from "@/components/integrations/FilterBar";
 import { IntegrationCard } from "@/components/integrations/IntegrationCard";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getIntegrationsPageCopy } from "@/lib/marketing-pages-copy";
+import { dirForLang } from "@/lib/locale";
 
 import "@/styles/integrations.css";
 
 function HeroSection() {
+  const { lang } = useLanguage();
+  const t = getIntegrationsPageCopy(lang);
+
   return (
     <section className="relative overflow-hidden py-16 text-center md:py-24">
       <div
@@ -22,27 +28,26 @@ function HeroSection() {
       />
       <div className="pointer-events-none absolute inset-0 bg-gradient-to-b from-transparent via-[#0A0A0F]/50 to-[#0A0A0F]" aria-hidden />
 
-      <div className="relative mx-auto max-w-2xl space-y-5">
-        <span className="inline-block rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-mono text-xs tracking-wide text-white/70">
-          500+ Integrations
+      <div className="relative mx-auto max-w-2xl space-y-5 px-4">
+        <span className="inline-block rounded-full border border-white/10 bg-white/5 px-4 py-1.5 font-sans text-xs tracking-wide text-white/70">
+          {t.badge}
         </span>
-        <h1 className="text-4xl font-bold tracking-tight text-white md:text-5xl">Connect All Your Tools</h1>
-        <p className="text-lg text-white/50">
-          Centralize all your data. Easily connect Samy to your existing tools and automate everything.
-        </p>
+        <h1 className="text-3xl font-bold tracking-tight text-white sm:text-4xl md:text-5xl">{t.title}</h1>
+        <p className="text-base text-white/50 sm:text-lg">{t.sub}</p>
       </div>
     </section>
   );
 }
 
 function IntegrationsGrid({ items }: { items: typeof integrations }) {
+  const { lang } = useLanguage();
+  const t = getIntegrationsPageCopy(lang);
+
   return (
-    <section className="pb-12">
+    <section className="pb-12 px-4 sm:px-6">
       <div className="mb-4 flex items-baseline justify-between gap-4">
         <h2 className="sr-only">Integrations</h2>
-        <p className="text-sm text-white/40">
-          {items.length} integration{items.length !== 1 ? "s" : ""}
-        </p>
+        <p className="text-sm text-white/40">{t.countLabel(items.length)}</p>
       </div>
 
       <AnimatePresence mode="wait">
@@ -71,31 +76,28 @@ function IntegrationsGrid({ items }: { items: typeof integrations }) {
 }
 
 function CTASection() {
+  const { lang } = useLanguage();
+  const t = getIntegrationsPageCopy(lang);
+
   return (
-    <section className="space-y-6 pb-20">
-      <div className="integrations-cta-border relative rounded-2xl bg-[#13131A] p-8 text-center md:p-12">
-        <p className="mb-2 font-mono text-xs uppercase tracking-widest text-[var(--purple)]">No coding required · 4 minutes</p>
-        <h2 className="mb-3 text-2xl font-bold text-white md:text-3xl">Missing an Integration? Build Your Own—No-Code.</h2>
-        <p className="mx-auto mb-4 max-w-2xl text-white/50">
-          Design, test, and publish custom integrations in minutes with our intuitive visual builder. No developers
-          required—just your creativity.
-        </p>
-        <p className="mx-auto mb-8 max-w-2xl text-sm text-white/40">
-          Can&apos;t find the integration you need? With Mini Apps, our visual flow builder lets you design,
-          authenticate, and publish seamless integrations tailored to your workflow—without writing a single line of code.
-        </p>
+    <section className="space-y-6 px-4 pb-20 sm:px-6">
+      <div className="integrations-cta-border relative rounded-2xl bg-[#13131A] p-6 text-center sm:p-8 md:p-12">
+        <p className="mb-2 font-sans text-xs uppercase tracking-widest text-[var(--purple)]">{t.ctaEyebrow}</p>
+        <h2 className="mb-3 text-xl font-bold text-white sm:text-2xl md:text-3xl">{t.ctaTitle}</h2>
+        <p className="mx-auto mb-4 max-w-2xl text-white/50">{t.ctaSub}</p>
+        <p className="mx-auto mb-8 max-w-2xl text-sm text-white/40">{t.ctaDetail}</p>
         <div className="flex flex-wrap items-center justify-center gap-3">
           <Link
             href="/build-agent"
             className="inline-flex items-center justify-center rounded-xl bg-[var(--coral)] px-5 py-2.5 text-sm font-medium text-white no-underline transition hover:opacity-90"
           >
-            Create Custom Integrations
+            {t.ctaPrimary}
           </Link>
           <Link
             href="/contact"
             className="inline-flex items-center justify-center rounded-xl border border-white/20 px-5 py-2.5 text-sm font-medium text-white no-underline transition hover:border-white/40 hover:bg-white/5"
           >
-            Request an Integration
+            {t.ctaSecondary}
           </Link>
         </div>
       </div>
@@ -104,6 +106,8 @@ function CTASection() {
 }
 
 export function IntegrationsLanding() {
+  const { lang } = useLanguage();
+  const dir = dirForLang(lang);
   const [activeFilter, setActiveFilter] = useState<FilterKey>("all");
 
   const filtered = useMemo(
@@ -112,7 +116,7 @@ export function IntegrationsLanding() {
   );
 
   return (
-    <div dir="ltr" className="min-h-screen bg-[#0A0A0F]">
+    <div dir={dir} className="min-h-screen bg-[#0A0A0F]">
       <HeroSection />
       <FilterBar active={activeFilter} onChange={setActiveFilter} />
       <IntegrationsGrid items={filtered} />

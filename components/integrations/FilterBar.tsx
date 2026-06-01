@@ -2,6 +2,8 @@
 
 import { motion } from "framer-motion";
 import { filterCategories, type FilterKey } from "@/lib/integrations-data";
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getIntegrationsPageCopy } from "@/lib/marketing-pages-copy";
 
 type FilterBarProps = {
   active: FilterKey;
@@ -9,10 +11,14 @@ type FilterBarProps = {
 };
 
 export function FilterBar({ active, onChange }: FilterBarProps) {
+  const { lang } = useLanguage();
+  const copy = getIntegrationsPageCopy(lang);
+
   return (
-    <div className="sticky top-20 z-20 -mx-4 bg-[#0A0A0F]/90 px-4 py-4 backdrop-blur-md">
+    <div className="sticky top-20 z-20 bg-[#0A0A0F]/90 px-4 py-4 backdrop-blur-md sm:px-6">
       <div className="flex gap-2 overflow-x-auto pb-1 [-ms-overflow-style:none] [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
-        {filterCategories.map(({ label, key }) => {
+        {filterCategories.map(({ key }) => {
+          const label = copy.filterLabels[key] ?? key;
           const isActive = active === key;
           return (
             <button

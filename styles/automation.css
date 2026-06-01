@@ -704,7 +704,7 @@
 @media (min-width: 640px) {
   .automation-page .p-step + .p-step {
     border-top: none;
-    border-left: 1px solid var(--automation-border);
+    border-inline-start: 1px solid var(--automation-border);
   }
 }
 
@@ -812,4 +812,15 @@
   gap: 16px;
   justify-content: center;
   flex-wrap: wrap;
+}
+
+.automation-page[dir="rtl"] .hero-actions,
+.automation-page[dir="rtl"] .cta-actions {
+  flex-direction: row-reverse;
+}
+
+.automation-page .automation-hero-canvas {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
 }
