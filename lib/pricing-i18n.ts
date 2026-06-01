@@ -367,8 +367,35 @@ export function getFaqs(lang: Lang): FaqItem[] {
   return pick(faqsByLang, lang);
 }
 
+const comparisonCellAr: Record<string, string> = {
+  "Add-on": "إضافة",
+  "$10/user": "10$/مستخدم",
+};
+
+export function localizeComparisonCell(
+  val: import("@/lib/pricing-data").ComparisonCell,
+  lang: Lang,
+): import("@/lib/pricing-data").ComparisonCell {
+  if (lang === "en") return val;
+  if (typeof val === "string") return comparisonCellAr[val] ?? val;
+  if (typeof val === "object" && val !== null && "addon" in val) {
+    return { addon: comparisonCellAr[val.addon] ?? val.addon };
+  }
+  return val;
+}
+
 export function getComparisonSections(lang: Lang): ComparisonSection[] {
-  return pick(comparisonSectionsByLang, lang);
+  const sections = pick(comparisonSectionsByLang, lang);
+  if (lang === "en") return sections;
+  return sections.map((section) => ({
+    ...section,
+    rows: section.rows.map((row) => ({
+      ...row,
+      starter: localizeComparisonCell(row.starter, lang),
+      growth: localizeComparisonCell(row.growth, lang),
+      scale: localizeComparisonCell(row.scale, lang),
+    })),
+  }));
 }
 
 export function getComparisonPlanLabels(

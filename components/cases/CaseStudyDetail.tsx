@@ -4,13 +4,15 @@ import Link from "next/link";
 import type { CaseStudy } from "@/lib/cases-index-data";
 import { CaseCardCover } from "@/components/cases/CaseCardCover";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { localizeCaseStudy } from "@/lib/cases-i18n";
 import { getCasesPageCopy } from "@/lib/marketing-pages-copy";
 
 import "@/styles/cases.css";
 
-export function CaseStudyDetail({ study }: { study: CaseStudy }) {
+export function CaseStudyDetail({ study: rawStudy }: { study: CaseStudy }) {
   const { lang } = useLanguage();
   const t = getCasesPageCopy(lang);
+  const study = localizeCaseStudy(rawStudy, lang);
   const buildHref = `/build-agent?prompt=${encodeURIComponent(`I want a bot similar to: ${study.listTitle}`)}`;
   const { detail } = study;
 

@@ -24,10 +24,20 @@ function openOverlay(){ if(!overlay) return; overlay.classList.add('open'); docu
 function closeOverlay(){ if(overlay) overlay.classList.remove('open'); document.body.style.overflow=''; resetBuilder(); }
 document.addEventListener('keydown',e=>{if(e.key==='Escape')closeOverlay();});
 
+function featLang(){return window.__FEAT_LANG__||'en';}
+function ff(k,fb){const l=featLang();const p=window.__FEAT_FLOW__;return (p&&p[l]&&p[l][k])||(p&&p.en&&p.en[k])||fb;}
+function featInfoPanel(id){const l=featLang();const p=window.__FEAT_INFO__;return (p&&p[l]&&p[l][id])||(p&&p.en&&p.en[id])||(typeof infoData!=='undefined'?infoData[id]:null);}
+
 // ══════════════════════════════════
 // FLOW BUILDER — FULL INTERACTIVE
 // ══════════════════════════════════
 function openFlow(){
+  if(typeof window.buildFeatFlowOverlay==='function'){
+    document.getElementById('feat-overlay-content').innerHTML=window.buildFeatFlowOverlay();
+    openOverlay();
+    initBuilder();
+    return;
+  }
   document.getElementById('feat-overlay-content').innerHTML=`
     <div class="fb-overlay">
       <div class="fb-overlay-nav">
@@ -185,13 +195,13 @@ function initBuilder(){
     setupDragListeners();
     setupCanvasListeners();
     // preload demo nodes
-    addNode('trigger','User Message',30,60);
+    addNode('trigger',ff('nodeUserMessage','User Message'),30,60);
     setTimeout(()=>{
-      addNode('message','Send Message',210,60);
+      addNode('message',ff('nodeSendMessage','Send Message'),210,60);
       setTimeout(()=>{
-        addNode('question','Ask Question',390,60);
+        addNode('question',ff('nodeAskQuestion','Ask Question'),390,60);
         setTimeout(()=>{
-          addNode('condition','Condition',570,60);
+          addNode('condition',ff('nodeCondition','Condition'),570,60);
           const ids=nodes.map(n=>n.id);
           addConnection(ids[0],ids[1]);addConnection(ids[1],ids[2]);addConnection(ids[2],ids[3]);
           selectNode(null);
@@ -357,12 +367,13 @@ function switchTab(name,el){
 }
 function updateStatus(){
   const cn=document.getElementById('chip-nodes-txt'),cc=document.getElementById('chip-conn-txt'),ht=document.getElementById('hint-text');
-  if(cn)cn.textContent=nodes.length+' node'+(nodes.length!==1?'s':'');
-  if(cc)cc.textContent=connections.length+' connection'+(connections.length!==1?'s':'');
+  const nSing=ff('nodeSingular','node'),nPlur=ff('nodesPlural','nodes'),cSing=ff('connectionSingular','connection'),cPlur=ff('connectionsPlural','connections');
+  if(cn)cn.textContent=nodes.length+' '+(nodes.length!==1?nPlur:nSing);
+  if(cc)cc.textContent=connections.length+' '+(connections.length!==1?cPlur:cSing);
   const chipN=document.getElementById('chip-nodes'),chipC=document.getElementById('chip-conn');
   if(chipN)chipN.className='status-chip'+(nodes.length?' active':'');
   if(chipC)chipC.className='status-chip'+(connections.length?' active':'');
-  if(ht){if(!nodes.length)ht.textContent='← Drag a node onto the canvas to start';else if(!connections.length)ht.textContent='Connect nodes by dragging from right port to left port';else ht.textContent='Click ▶ Run to simulate the flow';}
+  if(ht){if(!nodes.length)ht.textContent=ff('hintDragStart','← Drag a node onto the canvas to start');else if(!connections.length)ht.textContent=ff('hintConnect','Connect nodes by dragging from right port to left port');else ht.textContent=ff('hintRun','Click ▶ Run to simulate the flow');}
 }
 function updateDropHint(){const dh=document.getElementById('drop-hint');if(dh)dh.classList.toggle('hidden',nodes.length>0);}
 function showToast(msg,ok){const t=document.getElementById('feat-toast');if(!t)return;t.textContent=msg;t.className='toast'+(ok?' success':'');t.classList.add('show');setTimeout(()=>t.classList.remove('show'),2000);}
@@ -489,12 +500,17 @@ const infoData={
 };
 
 function openInfo(id){
-  const f=infoData[id];
+  const f=featInfoPanel(id);
+  if(!f)return;
+  const back=ff('backToFeatures','← Back to features');
+  const interactive=ff('interactive','Interactive');
+  const tryFree=ff('tryFeatureFree','Try {title} free →').replace('{title}',f.title);
+  const allFeat=ff('allFeatures','← All features');
   document.getElementById('feat-overlay-content').innerHTML=`
     <div class="info-overlay-inner">
       <div class="ov-nav">
-        <button class="ov-back" onclick="closeOverlay()">← Back to features</button>
-        <button class="ov-close" onclick="closeOverlay()">×</button>
+        <button class="ov-back" onclick="closeOverlay()">${back}</button>
+        <button type="button" class="ov-close" onclick="closeOverlay()" aria-label="Close">×</button>
       </div>
       <div class="ov-chip" style="background:${f.colorBg};border:0.5px solid ${f.colorBorder};color:${f.color};">${f.chip}</div>
       <h2 class="ov-title">${f.title} — <em style="color:${f.color};">${f.titleEm}</em></h2>
@@ -503,7 +519,7 @@ function openInfo(id){
         <div class="ov-demo">
           <div class="ov-demo-head">
             <span class="ov-demo-title">${f.demoTitle}</span>
-            <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--green);"><span class="pdot" style="width:5px;height:5px;"></span>Interactive</span>
+            <span style="display:flex;align-items:center;gap:4px;font-size:10px;color:var(--green);"><span class="pdot" style="width:5px;height:5px;"></span>${interactive}</span>
           </div>
           <div class="ov-demo-body">${f.demoHTML}</div>
         </div>
@@ -516,8 +532,8 @@ function openInfo(id){
         </div>
       </div>
       <div class="ov-cta-bar">
-        <button class="btn-try">Try ${f.title} free →</button>
-        <button class="btn-back" onclick="closeOverlay()">← All features</button>
+        <button class="btn-try">${tryFree}</button>
+        <button class="btn-back" onclick="closeOverlay()">${allFeat}</button>
       </div>
     </div>
   `;

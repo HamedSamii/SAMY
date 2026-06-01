@@ -6,7 +6,8 @@ import { useRouter, useSearchParams } from "next/navigation";
 import { CaseCardCover } from "@/components/cases/CaseCardCover";
 import { CaseStudyModal } from "@/components/cases/CaseStudyModal";
 import { useLanguage } from "@/components/providers/LanguageProvider";
-import { caseIndexCards, getCaseById, type CaseStudy } from "@/lib/cases-index-data";
+import { caseIndexCards, type CaseStudy } from "@/lib/cases-index-data";
+import { getLocalizedCaseById, localizeCaseCard } from "@/lib/cases-i18n";
 import { getCasesPageCopy } from "@/lib/marketing-pages-copy";
 
 import "@/styles/cases.css";
@@ -20,14 +21,14 @@ export function CasesLanding() {
 
   const openCase = useCallback(
     (id: string) => {
-      const study = getCaseById(id);
+      const study = getLocalizedCaseById(id, lang);
       if (!study) return;
       setActiveStudy(study);
       const url = new URL(window.location.href);
       url.searchParams.set("case", id);
       router.replace(url.pathname + url.search, { scroll: false });
     },
-    [router],
+    [router, lang],
   );
 
   const closeCase = useCallback(() => {
@@ -44,8 +45,8 @@ export function CasesLanding() {
       setActiveStudy(null);
       return;
     }
-    setActiveStudy(getCaseById(id));
-  }, [searchParams]);
+    setActiveStudy(getLocalizedCaseById(id, lang));
+  }, [searchParams, lang]);
 
   return (
     <div className="cases-page">
@@ -61,7 +62,8 @@ export function CasesLanding() {
 
       <section className="cases-section">
         <div className="cases-grid">
-          {caseIndexCards.map((card) => {
+          {caseIndexCards.map((rawCard) => {
+            const card = localizeCaseCard(rawCard, lang);
             const featured = Boolean(card.featuredWhenAll);
 
             return (

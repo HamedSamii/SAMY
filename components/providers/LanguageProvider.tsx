@@ -1,6 +1,7 @@
 "use client";
 
 import { createContext, useContext, useEffect, useMemo, useState } from "react";
+import { PageTitleSync } from "@/components/providers/PageTitleSync";
 import { content, Lang } from "@/lib/i18n";
 
 type LanguageContextType = {
@@ -33,7 +34,12 @@ export function LanguageProvider({ children }: { children: React.ReactNode }) {
     [lang],
   );
 
-  return <LanguageContext.Provider value={value}>{children}</LanguageContext.Provider>;
+  return (
+    <LanguageContext.Provider value={value}>
+      <PageTitleSync />
+      {children}
+    </LanguageContext.Provider>
+  );
 }
 
 export function useLanguage() {

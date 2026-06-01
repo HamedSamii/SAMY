@@ -37,17 +37,15 @@ export function AppShell({ children }: { children: React.ReactNode }) {
       {isFullPageLanding ? (
         children
       ) : (
-        <>
-          <main
-            className={`mx-auto w-full flex-1 ${flushUnderNav ? "pt-0" : "pt-24"} ${
-              isFullWidth ? "max-w-none px-0" : "max-w-7xl px-4"
-            }`}
-          >
-            {children}
-          </main>
-          <Footer />
-        </>
+        <main
+          className={`mx-auto w-full flex-1 ${flushUnderNav ? "pt-0" : "pt-24"} ${
+            isFullWidth ? "max-w-none px-0" : "max-w-7xl px-4"
+          }`}
+        >
+          {children}
+        </main>
       )}
+      <Footer />
     </>
   );
 }

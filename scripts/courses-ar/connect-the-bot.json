@@ -1,0 +1,72 @@
+{
+  "title": "ربط Samy بأكثر من 10 منصات مراسلة",
+  "description": "منصة واحدة وقنوات لا حصر لها. أتقن الربط السلس لـ WhatsApp وMessenger وInstagram وSMS/الصوت وTelegram وViber وLine وVK — بدون برمجة.",
+  "detailDescription": "منصة واحدة وقنوات لا حصر لها. أتقن الربط السلس لـ WhatsApp وMessenger وInstagram وSMS/الصوت وTelegram وViber وLine وVK — بدون برمجة.",
+  "level": "أساسي",
+  "modules": {
+    "m1": {
+      "title": "الوحدة 1 — قنوات Meta",
+      "lessons": {
+        "l1-1": {
+          "title": "ربط صفحات Facebook لقناة Messenger",
+          "description": "يوضح كيفية ربط حساب Facebook مع Samy لإنشاء شات بوت Messenger. يشمل ربط الصفحات واختيارها وإنشاء تدفق الشات بوت."
+        },
+        "l1-2": {
+          "title": "ربط قناة Instagram",
+          "description": "يشرح كيفية ربط حساب Samy مع Instagram بعد إعداد حساب Instagram للأعمال."
+        },
+        "l1-3": {
+          "title": "الربط مع WhatsApp Cloud API",
+          "description": "شرح تفصيلي لإعداد التسجيل المضمّن لـ WhatsApp Cloud API. يشمل إنشاء Meta Business Manager وتسجيل الرقم والفوترة والقوالب والكتالوجات واستكشاف الأخطاء."
+        },
+        "l1-4": {
+          "title": "ربط شات بوت WhatsApp",
+          "description": "يشرح كيفية ربط WhatsApp بخيارات مختلفة تشمل WhatsApp Cloud وTwilio و360Dialog."
+        }
+      }
+    },
+    "m2": {
+      "title": "الوحدة 2 — الصوت وSMS وTelegram",
+      "lessons": {
+        "l2-1": {
+          "title": "ربط قناة الصوت وSMS",
+          "description": "يوضح كيفية إعداد قنوات SMS والصوت باستخدام Twilio وSignalwire — إنشاء الحسابات والحصول على الأرقام وإعداد تدفقات الدردشة والصوت."
+        },
+        "l2-2": {
+          "title": "ربط قناة Telegram",
+          "description": "يوضح كيفية ربط حساب Samy مع شات بوت Telegram — إنشاء البوت والحصول على مفتاح API والتكامل للأتمتة."
+        }
+      }
+    },
+    "m3": {
+      "title": "الوحدة 3 — Viber وLine",
+      "lessons": {
+        "l3-1": {
+          "title": "ربط قناة Viber",
+          "description": "يوضح كيفية ربط حساب Samy مع Viber — إنشاء بوت Viber والحصول على مفتاح API والتكامل مع Samy."
+        },
+        "l3-2": {
+          "title": "ربط قناة Line",
+          "description": "يوضح كيفية ربط حساب LINE الرسمي مع Samy — إنشاء حساب LINE وتفعيل Messaging API والحصول على بيانات الاعتماد وإعداد شات بوت LINE."
+        }
+      }
+    },
+    "m4": {
+      "title": "الوحدة 4 — VK وJivo وIntercom",
+      "lessons": {
+        "l4-1": {
+          "title": "ربط قناة VK",
+          "description": "يوضح كيفية ربط قناة VK بمساحة عمل Samy — إنشاء مجتمع VK والحصول على معرف المجموعة ورمز الوصول والتكامل."
+        },
+        "l4-2": {
+          "title": "ربط Jivo Chat",
+          "description": "نظرة شاملة على قناة Jivo Chat — الميزات والفوائد وعملية التكامل وعرض حي لمنشئ تدفق الدردشة والدعم متعدد القنوات وقدرات الأتمتة."
+        },
+        "l4-3": {
+          "title": "ربط Intercom",
+          "description": "يوضح كيفية دمج Intercom مع Samy لدعم الدردشة المباشرة — ربط الحساب وإعداد التكامل وتمكين التحويل الآلي إلى الوكلاء المباشرين."
+        }
+      }
+    }
+  }
+}

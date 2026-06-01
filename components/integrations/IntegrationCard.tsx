@@ -3,7 +3,9 @@
 import { useState } from "react";
 import Image from "next/image";
 import Link from "next/link";
+import { useLanguage } from "@/components/providers/LanguageProvider";
 import type { Integration, IntegrationCategory } from "@/lib/integrations-data";
+import { localizeIntegration } from "@/lib/integrations-i18n";
 
 const categoryColors: Record<IntegrationCategory, string> = {
   ai: "#9B6DD8",
@@ -35,7 +37,9 @@ function InitialAvatar({ name, category }: { name: string; category: Integration
   );
 }
 
-export function IntegrationCard({ integration }: IntegrationCardProps) {
+export function IntegrationCard({ integration: raw }: IntegrationCardProps) {
+  const { lang } = useLanguage();
+  const integration = localizeIntegration(raw, lang);
   const [imageError, setImageError] = useState(false);
 
   return (

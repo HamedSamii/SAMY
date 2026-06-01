@@ -6,7 +6,7 @@ import { Badge } from "@/components/ui/Badge";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 
 export function Hero() {
-  const { t } = useLanguage();
+  const { lang, t } = useLanguage();
 
   return (
     <section className="grid gap-8 py-16 md:grid-cols-2 md:py-24">
@@ -23,7 +23,7 @@ export function Hero() {
       </motion.div>
       <div className="relative rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-6">
         <div className="grid h-64 place-items-center rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface2)]">
-          Dashboard Preview
+          {lang === "ar" ? "معاينة لوحة التحكم" : "Dashboard Preview"}
         </div>
         <span className="absolute -left-2 top-6 rounded-full bg-[var(--green)] px-3 py-1 text-xs">WhatsApp</span>
         <span className="absolute right-2 top-2 rounded-full bg-[var(--coral)] px-3 py-1 text-xs">Instagram</span>

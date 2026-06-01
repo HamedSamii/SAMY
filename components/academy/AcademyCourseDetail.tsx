@@ -1,27 +1,50 @@
+"use client";
+
 import Link from "next/link";
 import type { AcademyCourse } from "@/data/courses";
-
+import { useLanguage } from "@/components/providers/LanguageProvider";
+import { localizeCourse } from "@/lib/courses-i18n";
+import type { Lang } from "@/lib/i18n";
 import "@/styles/academy.css";
 
-function formatMeta(course: AcademyCourse): string {
+const uiCopy = {
+  en: {
+    back: "← All Courses",
+    lessons: (n: number) => `${n} lesson${n !== 1 ? "s" : ""}`,
+    allFree: "All Free",
+    free: "Free",
+  },
+  ar: {
+    back: "→ كل الدورات",
+    lessons: (n: number) => `${n} درس`,
+    allFree: "كلها مجانية",
+    free: "مجاني",
+  },
+} satisfies Record<Lang, Record<string, unknown>>;
+
+function formatMeta(course: AcademyCourse, lang: Lang): string {
+  const t = uiCopy[lang];
   const parts: string[] = [];
   if (course.lessonCount > 0) {
-    parts.push(`${course.lessonCount} lesson${course.lessonCount !== 1 ? "s" : ""}`);
+    parts.push(t.lessons(course.lessonCount) as string);
   } else if (course.videoCount) {
     parts.push(course.videoCount);
   }
-  if (course.isFree) parts.push("All Free");
+  if (course.isFree) parts.push(t.allFree as string);
   return parts.join(" · ");
 }
 
-export function AcademyCourseDetail({ course }: { course: AcademyCourse }) {
+export function AcademyCourseDetail({ course: rawCourse }: { course: AcademyCourse }) {
+  const { lang } = useLanguage();
+  const course = localizeCourse(rawCourse, lang);
+  const t = uiCopy[lang];
   let lessonIndex = 0;
 
   return (
     <div className="academy-course">
       <div className="academy-course-wrap px-4 md:px-10">
         <Link href="/academy" className="academy-course-back">
-          ← All Courses
+          {t.back as string}
         </Link>
       </div>
 
@@ -32,7 +55,7 @@ export function AcademyCourseDetail({ course }: { course: AcademyCourse }) {
       </header>
 
       <div className="academy-course-wrap px-4 md:px-10">
-        {formatMeta(course) ? <p className="academy-course-meta">{formatMeta(course)}</p> : null}
+        {formatMeta(course, lang) ? <p className="academy-course-meta">{formatMeta(course, lang)}</p> : null}
 
         {course.modules.map((mod) => (
           <section key={mod.id} className="academy-module">
@@ -51,7 +74,9 @@ export function AcademyCourseDetail({ course }: { course: AcademyCourse }) {
                       {lesson.duration ? (
                         <span className="academy-lesson-dur">{lesson.duration}</span>
                       ) : null}
-                      {lesson.isFree ? <span className="academy-lesson-free">Free</span> : null}
+                      {lesson.isFree ? (
+                        <span className="academy-lesson-free">{t.free as string}</span>
+                      ) : null}
                     </div>
                   </div>
                 </article>

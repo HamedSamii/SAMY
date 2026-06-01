@@ -10,6 +10,7 @@ import {
 } from "@/data/courses";
 import { useLanguage } from "@/components/providers/LanguageProvider";
 import { getAcademyPageCopy } from "@/lib/marketing-pages-copy";
+import { getCourseCategoryLabel, localizeCourse } from "@/lib/courses-i18n";
 import { arrow } from "@/lib/locale";
 
 import "@/styles/academy.css";
@@ -27,8 +28,15 @@ function matchesSearch(course: AcademyCourse, query: string): boolean {
   );
 }
 
-function CourseCard({ course, copy }: { course: AcademyCourse; copy: ReturnType<typeof getAcademyPageCopy> }) {
+function CourseCard({
+  course: rawCourse,
+  copy,
+}: {
+  course: AcademyCourse;
+  copy: ReturnType<typeof getAcademyPageCopy>;
+}) {
   const { lang } = useLanguage();
+  const course = localizeCourse(rawCourse, lang);
   let countLabel: string | null = null;
   if (course.videoCount) countLabel = course.videoCount;
   else if (course.lessonCount > 0) countLabel = copy.lessonCount(course.lessonCount);
@@ -54,22 +62,27 @@ export function AcademyLanding() {
   const [query, setQuery] = useState("");
   const [category, setCategory] = useState<FilterKey>("All");
 
+  const localizedCourses = useMemo(
+    () => courses.map((c) => localizeCourse(c, lang)),
+    [lang],
+  );
+
   const filtered = useMemo(() => {
-    return courses.filter(
+    return localizedCourses.filter(
       (course) =>
         (category === "All" || course.category === category) && matchesSearch(course, query),
     );
-  }, [category, query]);
+  }, [category, query, localizedCourses]);
 
   const grouped = useMemo(() => {
     if (category !== "All") {
-      return [{ name: category, items: filtered }];
+      return [{ name: getCourseCategoryLabel(category, lang), items: filtered }];
     }
     return COURSE_CATEGORIES.map((cat) => ({
-      name: cat,
+      name: getCourseCategoryLabel(cat, lang),
       items: filtered.filter((c) => c.category === cat),
     })).filter((g) => g.items.length > 0);
-  }, [category, filtered]);
+  }, [category, filtered, lang]);
 
   const filters: FilterKey[] = ["All", ...COURSE_CATEGORIES];
 
@@ -105,7 +118,7 @@ export function AcademyLanding() {
               className={`academy-filter-btn${category === key ? " is-active" : ""}`}
               onClick={() => setCategory(key)}
             >
-              {key === "All" ? copy.allCourses : key}
+              {key === "All" ? copy.allCourses : getCourseCategoryLabel(key, lang)}
             </button>
           ))}
         </div>

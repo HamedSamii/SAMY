@@ -1,9 +1,12 @@
 "use client";
 
+import { useEffect } from "react";
 import Link from "next/link";
 import Script from "next/script";
 import { FeaturesBgCanvas } from "@/components/features/FeaturesBgCanvas";
 import { useLanguage } from "@/components/providers/LanguageProvider";
+import { getFeaturesBentoCopy } from "@/lib/features-bento-i18n";
+import { syncFeaturesOverlayI18n } from "@/lib/features-info-i18n";
 import { getFeaturesHeroCopy } from "@/lib/features-copy";
 import { dirForLang } from "@/lib/locale";
 
@@ -42,9 +45,14 @@ export function FeaturesLanding() {
   const { lang } = useLanguage();
   const dir = dirForLang(lang);
   const hero = getFeaturesHeroCopy(lang);
+  const b = getFeaturesBentoCopy(lang);
+
+  useEffect(() => {
+    syncFeaturesOverlayI18n(lang);
+  }, [lang]);
 
   return (
-    <div id="feat-page-root" className="feat-scope relative z-0 font-sans" dir={dir}>
+    <div id="feat-page-root" className="feat-scope relative font-sans" dir={dir}>
       <FeaturesBgCanvas />
       <Script src="/samy-features-v2.js" strategy="afterInteractive" />
 
@@ -158,7 +166,7 @@ export function FeaturesLanding() {
                     animationDelay: ".1s",
                   }}
                 >
-                  ⚡ Trigger
+                  {b.flowStrip.trigger}
                 </div>
                 <div className="fl" style={{ animationDelay: ".3s" }} />
                 <div
@@ -170,7 +178,7 @@ export function FeaturesLanding() {
                     animationDelay: ".3s",
                   }}
                 >
-                  💬 Message
+                  {b.flowStrip.message}
                 </div>
                 <div className="fl" style={{ animationDelay: ".5s" }} />
                 <div
@@ -182,7 +190,7 @@ export function FeaturesLanding() {
                     animationDelay: ".5s",
                   }}
                 >
-                  ⚙ Condition
+                  {b.flowStrip.condition}
                 </div>
                 <div className="fl" style={{ animationDelay: ".7s" }} />
                 <div
@@ -194,7 +202,7 @@ export function FeaturesLanding() {
                     animationDelay: ".7s",
                   }}
                 >
-                  ✓ Action
+                  {b.flowStrip.action}
                 </div>
                 <div className="fl" style={{ animationDelay: ".9s" }} />
                 <div
@@ -206,28 +214,26 @@ export function FeaturesLanding() {
                     animationDelay: ".9s",
                   }}
                 >
-                  👤 Handoff
+                  {b.flowStrip.handoff}
                 </div>
               </div>
             </div>
             <div className="b-meta">
               <div className="b-cat" style={{ color: "var(--amber)" }}>
-                Automation
+                {b.automation.cat}
               </div>
-              <div className="b-title">Flow Builder — Visual drag-and-drop logic editor</div>
-              <div className="b-desc">
-                Build complete conversation flows by dragging nodes onto a canvas and connecting them. 7 node types, 3 flow patterns, publish/draft system.
-              </div>
+              <div className="b-title">{b.automation.title}</div>
+              <div className="b-desc">{b.automation.desc}</div>
               <div className="b-tags">
-                <span className="b-tag">Sub Flow</span>
-                <span className="b-tag">Workflow</span>
-                <span className="b-tag">Function Flow</span>
-                <span className="b-tag">7 nodes</span>
-                <span className="b-tag">Publish / Draft</span>
+                {b.automation.tags.map((tag) => (
+                  <span key={tag} className="b-tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div className="b-cta">→ Try the interactive builder</div>
+              <div className="b-cta">{b.automation.cta}</div>
             </div>
-            <div className="b-explore">⤢ Open builder</div>
+            <div className="b-explore">{b.automation.explore}</div>
           </div>
 
           <div
@@ -240,27 +246,27 @@ export function FeaturesLanding() {
           >
             <div className="b-visual">
               <div className="ai-mini" style={{ width: "90%" }}>
-                <div className="ai-prompt-m">You are a helpful sales agent. Answer from the knowledge base only.</div>
-                <div className="ai-arr">→ AI responds in 0.4s</div>
-                <div className="ai-resp-m">Yes! The Floral Dress (SKU-2241) is available in M. Want to order? 🌸</div>
+                <div className="ai-prompt-m">{b.ai.prompt}</div>
+                <div className="ai-arr">{b.ai.arr}</div>
+                <div className="ai-resp-m">{b.ai.resp}</div>
               </div>
             </div>
             <div className="b-meta">
               <div className="b-cat" style={{ color: "var(--blue)" }}>
-                AI
+                {b.ai.cat}
               </div>
-              <div className="b-title">AI Hub</div>
-              <div className="b-desc">
-                Full AI agents with web search, MCP servers, and knowledge base. Auto-suggests replies to human agents in real time.
-              </div>
+              <div className="b-title">{b.ai.title}</div>
+              <div className="b-desc">{b.ai.desc}</div>
               <div className="b-tags">
-                <span className="b-tag">AI Agents</span>
-                <span className="b-tag">MCP Servers</span>
-                <span className="b-tag">Knowledge Base</span>
+                {b.ai.tags.map((tag) => (
+                  <span key={tag} className="b-tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div className="b-cta">→ Explore AI Hub</div>
+              <div className="b-cta">{b.ai.cta}</div>
             </div>
-            <div className="b-explore">⤢ Explore</div>
+            <div className="b-explore">{b.ai.explore}</div>
           </div>
 
           <div
@@ -325,20 +331,20 @@ export function FeaturesLanding() {
             </div>
             <div className="b-meta">
               <div className="b-cat" style={{ color: "var(--green)" }}>
-                Channels
+                {b.channels.cat}
               </div>
-              <div className="b-title">Omni Channel</div>
-              <div className="b-desc">
-                Build once, deploy to 15+ channels. WhatsApp, Instagram, Facebook, Voice AI, SMS, Telegram, TikTok and more.
-              </div>
+              <div className="b-title">{b.channels.title}</div>
+              <div className="b-desc">{b.channels.desc}</div>
               <div className="b-tags">
-                <span className="b-tag">15+ channels</span>
-                <span className="b-tag">Build once</span>
-                <span className="b-tag">Per-channel config</span>
+                {b.channels.tags.map((tag) => (
+                  <span key={tag} className="b-tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div className="b-cta">→ All channels</div>
+              <div className="b-cta">{b.channels.cta}</div>
             </div>
-            <div className="b-explore">⤢ Explore</div>
+            <div className="b-explore">{b.channels.explore}</div>
           </div>
 
           <div
@@ -352,48 +358,48 @@ export function FeaturesLanding() {
             <div className="b-visual">
               <div className="queue-mini" style={{ width: "90%" }}>
                 <div style={{ display: "flex", alignItems: "center", justifyContent: "space-between", marginBottom: "4px" }}>
-                  <span style={{ fontSize: "10px", fontWeight: 500 }}>Live Queue</span>
+                  <span style={{ fontSize: "10px", fontWeight: 500 }}>{b.live.queueTitle}</span>
                   <span style={{ display: "flex", alignItems: "center", gap: "4px", fontSize: "10px", color: "var(--green)" }}>
                     <span className="pdot" style={{ width: "5px", height: "5px" }} />
-                    3 active
+                    {b.live.active}
                   </span>
                 </div>
                 <div className="qr">
                   <div className="qav" style={{ background: "var(--pd)", color: "var(--purple)" }}>
                     AK
                   </div>
-                  <div className="qt">Ahmed K. — order inquiry</div>
+                  <div className="qt">{b.live.inquiry1}</div>
                   <span className="qb" style={{ background: "rgba(29,158,117,.12)", color: "#1D9E75" }}>
-                    Bot
+                    {b.live.badgeBot}
                   </span>
                 </div>
                 <div className="qr">
                   <div className="qav" style={{ background: "rgba(239,159,39,.15)", color: "#EF9F27" }}>
                     SM
                   </div>
-                  <div className="qt">Sara M. — refund request</div>
+                  <div className="qt">{b.live.inquiry2}</div>
                   <span className="qb" style={{ background: "rgba(239,159,39,.12)", color: "#EF9F27" }}>
-                    Handoff
+                    {b.live.badgeHandoff}
                   </span>
                 </div>
               </div>
             </div>
             <div className="b-meta">
               <div className="b-cat" style={{ color: "var(--pink)" }}>
-                Human
+                {b.live.cat}
               </div>
-              <div className="b-title">Live Chat & Handoff</div>
-              <div className="b-desc">
-                Seamless bot-to-agent handoff with full context. AI suggests replies to agents in real time. Agent groups and queue management.
-              </div>
+              <div className="b-title">{b.live.title}</div>
+              <div className="b-desc">{b.live.desc}</div>
               <div className="b-tags">
-                <span className="b-tag">Smart handoff</span>
-                <span className="b-tag">Agent groups</span>
-                <span className="b-tag">AI suggestions</span>
+                {b.live.tags.map((tag) => (
+                  <span key={tag} className="b-tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div className="b-cta">→ See handoff demo</div>
+              <div className="b-cta">{b.live.cta}</div>
             </div>
-            <div className="b-explore">⤢ Explore</div>
+            <div className="b-explore">{b.live.explore}</div>
           </div>
 
           <div
@@ -411,21 +417,21 @@ export function FeaturesLanding() {
                     <div className="an-val" style={{ color: "var(--purple)" }}>
                       4,841
                     </div>
-                    <div className="an-lbl">Conversations</div>
+                    <div className="an-lbl">{b.analytics.conversations}</div>
                     <div style={{ fontSize: "9px", color: "var(--green)" }}>↑ 31%</div>
                   </div>
                   <div className="an-stat">
                     <div className="an-val" style={{ color: "var(--green)" }}>
                       78%
                     </div>
-                    <div className="an-lbl">Resolution</div>
+                    <div className="an-lbl">{b.analytics.resolution}</div>
                     <div style={{ fontSize: "9px", color: "var(--green)" }}>↑ 5%</div>
                   </div>
                   <div className="an-stat">
                     <div className="an-val" style={{ color: "var(--amber)" }}>
                       0.4s
                     </div>
-                    <div className="an-lbl">Avg response</div>
+                    <div className="an-lbl">{b.analytics.avgResponse}</div>
                     <div style={{ fontSize: "9px", color: "var(--green)" }}>↓ 0.1s</div>
                   </div>
                 </div>
@@ -446,23 +452,20 @@ export function FeaturesLanding() {
             </div>
             <div className="b-meta">
               <div className="b-cat" style={{ color: "var(--coral)" }}>
-                Analytics
+                {b.analytics.cat}
               </div>
-              <div className="b-title">Analytics & Reporting — Complete visibility into every conversation</div>
-              <div className="b-desc">
-                Real-time dashboards, agent performance reports, channel breakdown, custom reports, activity heatmaps, and live feed. Know exactly how your bot
-                performs.
-              </div>
+              <div className="b-title">{b.analytics.title}</div>
+              <div className="b-desc">{b.analytics.desc}</div>
               <div className="b-tags">
-                <span className="b-tag">Real-time</span>
-                <span className="b-tag">Agent performance</span>
-                <span className="b-tag">Custom reports</span>
-                <span className="b-tag">Heatmap</span>
-                <span className="b-tag">Live feed</span>
+                {b.analytics.tags.map((tag) => (
+                  <span key={tag} className="b-tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div className="b-cta">→ View analytics dashboard</div>
+              <div className="b-cta">{b.analytics.cta}</div>
             </div>
-            <div className="b-explore">⤢ Explore</div>
+            <div className="b-explore">{b.analytics.explore}</div>
           </div>
 
           <div
@@ -484,21 +487,20 @@ export function FeaturesLanding() {
             </div>
             <div className="b-meta">
               <div className="b-cat" style={{ color: "var(--muted)" }}>
-                Connect
+                {b.integrations.cat}
               </div>
-              <div className="b-title">30+ Integrations — Connect everything your business uses</div>
-              <div className="b-desc">
-                AI models, ecommerce, payments, CRM, databases, email, and automation platforms. One-click connect for most integrations — no developer needed.
-              </div>
+              <div className="b-title">{b.integrations.title}</div>
+              <div className="b-desc">{b.integrations.desc}</div>
               <div className="b-tags">
-                <span className="b-tag">One-click</span>
-                <span className="b-tag">Inbound webhooks</span>
-                <span className="b-tag">No-code</span>
-                <span className="b-tag">API access</span>
+                {b.integrations.tags.map((tag) => (
+                  <span key={tag} className="b-tag">
+                    {tag}
+                  </span>
+                ))}
               </div>
-              <div className="b-cta">→ Browse all integrations</div>
+              <div className="b-cta">{b.integrations.cta}</div>
             </div>
-            <div className="b-explore">⤢ Explore</div>
+            <div className="b-explore">{b.integrations.explore}</div>
           </div>
         </div>
       </div>
@@ -507,17 +509,18 @@ export function FeaturesLanding() {
         <div className="bot-cta-in">
           <div className="urgency-badge">
             <span className="pdot" />
-            Only 3 new clients this month
+            {b.bottomCta.urgency}
           </div>
           <h2 className="cta-title">
-            Ready to build your <em>smarter agent?</em>
+            {b.bottomCta.title}
+            <em>{b.bottomCta.titleEm}</em>
           </h2>
           <div className="cta-btns">
             <Link href="https://app.samy.agency" className="btn-prim">
-              Build your agent free →
+              {b.bottomCta.primary}
             </Link>
             <Link href="/pricing" className="btn-ghost">
-              See pricing
+              {b.bottomCta.secondary}
             </Link>
           </div>
         </div>
