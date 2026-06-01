@@ -37,7 +37,7 @@ const metaByPath: Record<string, LocalizedMeta> = {
   },
   "/build-agent": {
     en: { title: "Build Agent | Samy", description: "Build your bilingual AI agent in minutes." },
-    ar: { title: "ابني أجنتك | Samy", description: "ابنِ أجنتك الذكي ثنائي اللغة في دقائق." },
+    ar: { title: "ابني وكيلك | Samy", description: "ابنِ وكيلك الذكي ثنائي اللغة في دقائق." },
   },
   "/channels": {
     en: { title: "Channels | Samy", description: "Connect on every channel your customers use." },

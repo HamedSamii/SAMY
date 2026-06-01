@@ -200,8 +200,8 @@ export const featuresBentoCopy: Localized<FeaturesBentoCopy> = {
     bottomCta: {
       urgency: "3 عملاء جدد فقط هذا الشهر",
       title: "جاهز تبني ",
-      titleEm: "أجنتك الأذكى؟",
-      primary: "ابني أجنتك مجاناً ←",
+      titleEm: "وكيلك الأذكى؟",
+      primary: "ابني وكيلك مجاناً ←",
       secondary: "شوف الأسعار",
     },
   },
