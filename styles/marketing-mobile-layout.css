@@ -1,0 +1,105 @@
+/**
+ * Marketing site: keep desktop layouts on mobile — scale down, don't stack.
+ * Imported globally via AppShell for all public pages.
+ */
+
+.samy-marketing-site {
+  --mkt-pad-x: clamp(12px, 3vw, 48px);
+  --mkt-pad-block: clamp(16px, 4vw, 48px);
+  width: 100%;
+  max-width: 100vw;
+  overflow-x: clip;
+}
+
+.samy-marketing-site main {
+  min-width: 0;
+}
+
+@media (max-width: 768px) {
+  .samy-marketing-site {
+    --mkt-text-xs: clamp(7px, 1.8vw, 10px);
+    --mkt-text-sm: clamp(8px, 2vw, 11px);
+    --mkt-text-base: clamp(9px, 2.2vw, 13px);
+    --mkt-text-lg: clamp(11px, 2.8vw, 15px);
+    --mkt-text-xl: clamp(13px, 3.5vw, 22px);
+    --mkt-gap: clamp(4px, 1.2vw, 12px);
+  }
+
+  /* Tailwind marketing grids — same column count as desktop */
+  .samy-marketing-site .mkt-grid-2 {
+    grid-template-columns: repeat(2, minmax(0, 1fr)) !important;
+    gap: var(--mkt-gap) !important;
+  }
+
+  .samy-marketing-site .mkt-grid-3 {
+    grid-template-columns: repeat(3, minmax(0, 1fr)) !important;
+    gap: var(--mkt-gap) !important;
+  }
+
+  .samy-marketing-site .mkt-grid-4 {
+    grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+    gap: var(--mkt-gap) !important;
+  }
+
+  .samy-marketing-site .mkt-grid-6 {
+    grid-template-columns: repeat(6, minmax(0, 1fr)) !important;
+    gap: var(--mkt-gap) !important;
+  }
+
+  .samy-marketing-site .mkt-grid-12 {
+    grid-template-columns: repeat(12, minmax(0, 1fr)) !important;
+    gap: var(--mkt-gap) !important;
+  }
+
+  .samy-marketing-site .mkt-grid-2 > *,
+  .samy-marketing-site .mkt-grid-3 > *,
+  .samy-marketing-site .mkt-grid-4 > *,
+  .samy-marketing-site .mkt-grid-6 > *,
+  .samy-marketing-site .mkt-grid-12 > * {
+    min-width: 0;
+  }
+
+  .samy-marketing-site .mkt-scale-text {
+    font-size: var(--mkt-text-base) !important;
+    line-height: 1.4;
+  }
+
+  .samy-marketing-site .mkt-scale-heading {
+    font-size: var(--mkt-text-xl) !important;
+    line-height: 1.15;
+  }
+
+  .samy-marketing-site .mkt-scale-card {
+    padding: clamp(8px, 2vw, 22px) !important;
+  }
+
+  .samy-marketing-site .mkt-row {
+    flex-wrap: nowrap !important;
+    gap: var(--mkt-gap) !important;
+  }
+
+  .samy-marketing-site .mkt-grid-4 > * {
+    font-size: var(--mkt-text-xs);
+  }
+
+  .samy-marketing-site .mkt-grid-4 .rounded-2xl {
+    border-radius: 10px;
+  }
+
+  .samy-marketing-site .mkt-grid-3 > *,
+  .samy-marketing-site .mkt-grid-6 > * {
+    font-size: var(--mkt-text-sm);
+  }
+
+  .samy-marketing-site button,
+  .samy-marketing-site input,
+  .samy-marketing-site select {
+    font-size: var(--mkt-text-sm);
+  }
+}
+
+@media (max-width: 400px) {
+  .samy-marketing-site {
+    --mkt-gap: clamp(3px, 1vw, 8px);
+  }
+}

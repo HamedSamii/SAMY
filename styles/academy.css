@@ -150,7 +150,7 @@
 
 .academy-page .academy-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(310px, 1fr));
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 14px;
 }
 
@@ -410,16 +410,33 @@ html[lang="ar"] .academy-page .academy-card:hover .academy-card-arrow {
   border-radius: 4px;
 }
 
-@media (max-width: 600px) {
+@media (max-width: 768px) {
   .academy-page .academy-wrap {
-    padding: 0 16px 60px;
+    padding: 0 clamp(8px, 2.5vw, 16px) 60px;
   }
 
   .academy-page .academy-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(6px, 1.5vw, 14px);
+  }
+
+  .academy-page .academy-card {
+    padding: clamp(10px, 2.5vw, 22px);
+  }
+
+  .academy-page .academy-card-title {
+    font-size: clamp(10px, 2.5vw, 15px);
+  }
+
+  .academy-page .academy-card-desc {
+    font-size: clamp(8px, 2vw, 12px);
+  }
+
+  .academy-page .academy-hero h1 {
+    font-size: clamp(20px, 5vw, 40px);
   }
 
   .academy-course .academy-course-wrap {
-    padding: 0 4px;
+    padding: 0 clamp(6px, 2vw, 16px);
   }
 }

@@ -28,15 +28,15 @@ export function IndustriesPageContent() {
 
   return (
     <div className="space-y-6 py-6">
-      <h1 className="text-3xl font-bold sm:text-4xl">{t.title as string}</h1>
-      <div className="flex flex-wrap gap-2">
+      <h1 className="mkt-scale-heading text-3xl font-bold">{t.title as string}</h1>
+      <div className="mkt-row flex gap-2 overflow-x-auto">
         {(t.industries as string[]).map((i) => (
           <span key={i} className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1 text-sm">
             {i}
           </span>
         ))}
       </div>
-      <div className="grid gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 md:grid-cols-2">
+      <div className="mkt-grid-2 grid grid-cols-2 gap-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
         <div className="grid h-56 place-items-center rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface2)]">
           {t.demo as string}
         </div>

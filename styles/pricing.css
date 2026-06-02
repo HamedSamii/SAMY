@@ -161,6 +161,7 @@
   padding: 28px;
   position: relative;
   transition: border-color 0.3s, transform 0.3s;
+  min-width: 0;
 }
 
 .pricing-page .plan-card:hover {
@@ -221,8 +222,11 @@
 
 .pricing-page .plan-price {
   display: flex;
-  align-items: flex-start;
+  align-items: baseline;
+  flex-wrap: nowrap;
   gap: 2px;
+  direction: ltr;
+  unicode-bidi: isolate;
 }
 
 .pricing-page .plan-price .currency {
@@ -731,24 +735,145 @@
   letter-spacing: 2px;
 }
 
-/* ─── Responsive ─── */
+/* ─── Responsive: scale down, keep 3-column layout ─── */
 @media (max-width: 900px) {
+  .pricing-page {
+    padding: 0 clamp(8px, 2.5vw, 24px) 60px;
+  }
+
+  .pricing-page .toggle-btn {
+    padding: 6px 12px;
+    font-size: clamp(10px, 2.5vw, 14px);
+  }
+
+  .pricing-page .save-badge {
+    font-size: clamp(9px, 2vw, 12px);
+    padding: 3px 8px;
+  }
+
   .pricing-page .plans-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(4px, 1.2vw, 12px);
+    align-items: stretch;
+  }
+
+  .pricing-page .plan-card {
+    padding: clamp(8px, 2vw, 20px);
+    border-radius: 12px;
   }
 
   .pricing-page .plan-card.highlight {
     transform: none;
+    box-shadow: none;
+  }
+
+  .pricing-page .popular-badge {
+    font-size: clamp(6px, 1.5vw, 10px);
+    padding: 3px 8px;
+    top: -9px;
+    letter-spacing: 0.04em;
+  }
+
+  .pricing-page .plan-name {
+    font-size: clamp(8px, 2vw, 13px);
+    margin-bottom: 4px;
+    letter-spacing: 0.04em;
+  }
+
+  .pricing-page .plan-tagline {
+    font-size: clamp(7px, 1.7vw, 11px);
+    margin-bottom: clamp(6px, 1.5vw, 14px);
+    line-height: 1.35;
+  }
+
+  .pricing-page .plan-price-wrap {
+    margin-bottom: 2px;
+  }
+
+  .pricing-page .plan-price .currency {
+    font-size: clamp(9px, 2.2vw, 16px);
+    margin-top: 0;
+  }
+
+  .pricing-page .plan-price .amount {
+    font-size: clamp(16px, 4.2vw, 32px);
+    letter-spacing: -0.02em;
+  }
+
+  .pricing-page .plan-price .period {
+    font-size: clamp(7px, 1.6vw, 11px);
+    padding-bottom: 0;
+    white-space: nowrap;
+  }
+
+  .pricing-page .plan-billing {
+    font-size: clamp(6px, 1.5vw, 10px);
+    margin-bottom: clamp(6px, 1.5vw, 12px);
+    line-height: 1.3;
+  }
+
+  .pricing-page .contacts-badge {
+    font-size: clamp(6px, 1.5vw, 10px);
+    padding: 2px 6px;
+    margin-bottom: clamp(6px, 1.5vw, 12px);
+  }
+
+  .pricing-page .divider {
+    margin-bottom: clamp(6px, 1.5vw, 12px);
+  }
+
+  .pricing-page .features-list {
+    gap: 4px;
+    margin-bottom: clamp(8px, 2vw, 16px);
+  }
+
+  .pricing-page .features-list li {
+    font-size: clamp(7px, 1.7vw, 11px);
+    gap: 4px;
+    line-height: 1.35;
+    align-items: flex-start;
+  }
+
+  .pricing-page .check {
+    font-size: clamp(8px, 1.8vw, 11px);
+    margin-top: 0;
+  }
+
+  .pricing-page .plan-cta {
+    padding: clamp(6px, 1.5vw, 10px) clamp(4px, 1vw, 8px);
+    font-size: clamp(7px, 1.7vw, 12px);
+    border-radius: 8px;
   }
 
   .pricing-page .enterprise-strip {
-    flex-direction: column;
-    align-items: flex-start;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    align-items: center;
+    gap: clamp(8px, 2vw, 24px);
+    padding: clamp(12px, 2.5vw, 28px);
+  }
+
+  .pricing-page .enterprise-title {
+    font-size: clamp(12px, 3vw, 20px);
+  }
+
+  .pricing-page .enterprise-desc {
+    font-size: clamp(9px, 2vw, 14px);
+  }
+
+  .pricing-page .enterprise-price {
+    font-size: clamp(14px, 3.5vw, 24px);
+  }
+
+  .pricing-page .enterprise-cta {
+    font-size: clamp(9px, 2vw, 13px);
+    padding: clamp(8px, 2vw, 12px) clamp(10px, 2.5vw, 20px);
   }
 
   .pricing-page .enterprise-right {
-    align-items: flex-start;
-    width: 100%;
+    align-items: center;
+    width: auto;
+    flex-shrink: 0;
   }
 
   .pricing-page .comparison-wrap {
@@ -757,10 +882,37 @@
 
   .pricing-page .table-header,
   .pricing-page .table-row {
-    min-width: 560px;
+    min-width: min(100%, 560px);
+    font-size: clamp(8px, 2vw, 13px);
   }
 
   .pricing-page .hero h1 {
-    font-size: 36px;
+    font-size: clamp(22px, 5vw, 48px);
+  }
+
+  .pricing-page .hero p {
+    font-size: clamp(10px, 2.5vw, 16px);
+  }
+}
+
+@media (max-width: 400px) {
+  .pricing-page .plan-price .amount {
+    font-size: clamp(13px, 3.8vw, 18px);
+  }
+
+  .pricing-page .plan-price .currency {
+    font-size: clamp(8px, 2vw, 12px);
+  }
+
+  .pricing-page .plan-tagline {
+    display: none;
+  }
+
+  .pricing-page .plan-billing {
+    font-size: 6px;
+  }
+
+  .pricing-page .features-list li {
+    font-size: 6.5px;
   }
 }

@@ -46,11 +46,11 @@ export function BuildAgentPageContent() {
 
   return (
     <div className="space-y-6 py-6">
-      <h1 className="text-3xl font-bold sm:text-4xl">{t.title as string}</h1>
-      <p className="text-[var(--muted)]">{t.sub as string}</p>
-      <section className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6">
-        <h2 className="text-xl font-semibold sm:text-2xl">{t.step1 as string}</h2>
-        <div className="grid gap-3 sm:grid-cols-2 md:grid-cols-3">
+      <h1 className="mkt-scale-heading text-3xl font-bold">{t.title as string}</h1>
+      <p className="mkt-scale-text text-[var(--muted)]">{t.sub as string}</p>
+      <section className="mkt-scale-card space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
+        <h2 className="mkt-scale-heading text-xl font-semibold">{t.step1 as string}</h2>
+        <div className="mkt-grid-3 grid grid-cols-3 gap-3">
           {(t.industries as string[]).map((i) => (
             <button key={i} className="rounded-xl border border-[var(--border)] bg-[var(--surface2)] p-3 text-sm">
               {i}
@@ -58,9 +58,9 @@ export function BuildAgentPageContent() {
           ))}
         </div>
       </section>
-      <section className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6">
-        <h2 className="text-xl font-semibold sm:text-2xl">{t.step2 as string}</h2>
-        <div className="grid gap-3 sm:grid-cols-2">
+      <section className="mkt-scale-card space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
+        <h2 className="mkt-scale-heading text-xl font-semibold">{t.step2 as string}</h2>
+        <div className="mkt-grid-2 grid grid-cols-2 gap-3">
           <input className="rounded-xl border border-[var(--border)] bg-[var(--surface2)] p-3" placeholder={t.botName as string} />
           <select className="rounded-xl border border-[var(--border)] bg-[var(--surface2)] p-3">
             <option>{t.primaryChannel as string}</option>
@@ -82,8 +82,8 @@ export function BuildAgentPageContent() {
           </select>
         </div>
       </section>
-      <section className="space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5 sm:p-6">
-        <h2 className="text-xl font-semibold sm:text-2xl">{t.step3 as string}</h2>
+      <section className="mkt-scale-card space-y-4 rounded-2xl border border-[var(--border)] bg-[var(--surface)] p-5">
+        <h2 className="mkt-scale-heading text-xl font-semibold">{t.step3 as string}</h2>
         <div className="grid h-48 place-items-center rounded-xl border border-dashed border-[var(--border)] bg-[var(--surface2)]">
           {t.preview as string}
         </div>

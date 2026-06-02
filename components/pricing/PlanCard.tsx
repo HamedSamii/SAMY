@@ -37,7 +37,7 @@ export function PlanCard({ plan, billingCycle, labels }: PlanCardProps) {
       <div className="plan-tagline">{plan.tagline}</div>
 
       <div className="plan-price-wrap">
-        <div className="plan-price">
+        <div className="plan-price" dir="ltr">
           <span className="currency">$</span>
           <span className="amount">{displayPrice}</span>
           <span className="period">/mo</span>

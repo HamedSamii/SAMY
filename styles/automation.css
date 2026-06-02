@@ -208,17 +208,11 @@
 
 .automation-page .pillars-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 2px;
   border: 1px solid var(--automation-border);
   border-radius: 16px;
   overflow: hidden;
-}
-
-@media (min-width: 768px) {
-  .automation-page .pillars-grid {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
 }
 
 .automation-page .pillar {
@@ -301,14 +295,8 @@
 
 .automation-page .cases-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
   gap: 16px;
-}
-
-@media (max-width: 767px) {
-  .automation-page .cases-grid {
-    grid-template-columns: 1fr;
-  }
 }
 
 .automation-page .case-card {
@@ -500,21 +488,9 @@
 
 .automation-page .tools-grid {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 16px;
   margin-top: 40px;
-}
-
-@media (min-width: 640px) {
-  .automation-page .tools-grid {
-    grid-template-columns: 1fr 1fr;
-  }
-}
-
-@media (min-width: 1024px) {
-  .automation-page .tools-grid {
-    grid-template-columns: repeat(4, 1fr);
-  }
 }
 
 .automation-page .tool-card {
@@ -677,7 +653,7 @@
 
 .automation-page .pricing-steps {
   display: grid;
-  grid-template-columns: 1fr;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
   gap: 0;
   margin: 36px 0;
   border: 1px solid var(--automation-border);
@@ -685,27 +661,16 @@
   overflow: hidden;
 }
 
-@media (min-width: 640px) {
-  .automation-page .pricing-steps {
-    grid-template-columns: 1fr 1fr 1fr;
-  }
-}
-
 .automation-page .p-step {
   padding: 22px 16px;
   text-align: center;
   background: var(--bg);
+  min-width: 0;
 }
 
 .automation-page .p-step + .p-step {
-  border-top: 1px solid var(--automation-border);
-}
-
-@media (min-width: 640px) {
-  .automation-page .p-step + .p-step {
-    border-top: none;
-    border-inline-start: 1px solid var(--automation-border);
-  }
+  border-top: none;
+  border-inline-start: 1px solid var(--automation-border);
 }
 
 .automation-page .p-step-num {
@@ -823,4 +788,68 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
+}
+
+@media (max-width: 768px) {
+  .automation-page .pillars-section,
+  .automation-page .cases-section,
+  .automation-page .tools-section,
+  .automation-page .pricing-section,
+  .automation-page .cta-section {
+    padding: clamp(40px, 8vw, 80px) clamp(10px, 3vw, 48px);
+  }
+
+  .automation-page .pillar {
+    padding: clamp(14px, 3vw, 36px) clamp(10px, 2.5vw, 32px);
+  }
+
+  .automation-page .pillar-num {
+    font-size: clamp(20px, 5vw, 40px);
+  }
+
+  .automation-page .pillar h3 {
+    font-size: clamp(11px, 2.8vw, 18px);
+  }
+
+  .automation-page .pillar p {
+    font-size: clamp(9px, 2.2vw, 14px);
+  }
+
+  .automation-page .cases-grid {
+    gap: clamp(8px, 2vw, 16px);
+  }
+
+  .automation-page .case-card {
+    padding: clamp(12px, 2.5vw, 28px);
+  }
+
+  .automation-page .tool-card {
+    padding: clamp(10px, 2vw, 26px);
+  }
+
+  .automation-page .tool-card h3 {
+    font-size: clamp(10px, 2.5vw, 16px);
+  }
+
+  .automation-page .p-step {
+    padding: clamp(10px, 2vw, 22px) clamp(6px, 1.5vw, 16px);
+  }
+
+  .automation-page .p-step-num {
+    font-size: clamp(16px, 4vw, 26px);
+  }
+
+  .automation-page .hero-actions,
+  .automation-page .cta-actions {
+    flex-wrap: nowrap;
+    gap: clamp(6px, 1.5vw, 16px);
+  }
+
+  .automation-page .hero-actions a,
+  .automation-page .hero-actions button,
+  .automation-page .cta-actions a,
+  .automation-page .cta-actions button {
+    font-size: clamp(9px, 2.2vw, 14px);
+    padding: clamp(8px, 2vw, 14px) clamp(12px, 2.5vw, 24px);
+  }
 }

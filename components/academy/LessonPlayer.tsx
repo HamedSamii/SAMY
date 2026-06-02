@@ -1,6 +1,6 @@
 export function LessonPlayer() {
   return (
-    <div className="grid gap-5 md:grid-cols-[1fr_280px]">
+    <div className="mkt-grid-2 grid grid-cols-[minmax(0,1fr)_minmax(0,88px)] gap-3 md:grid-cols-[minmax(0,1fr)_280px]">
       <div className="space-y-4">
         <div className="grid h-72 place-items-center rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface2)]">
           Video Player Placeholder

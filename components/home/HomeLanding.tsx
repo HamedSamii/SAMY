@@ -322,7 +322,7 @@ export function HomeLanding() {
 
 function HeroBotSvgLarge() {
   return (
-    <svg width={320} viewBox="0 0 600 520" role="img">
+    <svg className="hp-hero-bot-svg" viewBox="0 0 600 520" role="img">
       <title>Samy bot logo</title>
       <circle className="d1" cx="88" cy="155" r="7" fill="#EF9F27" opacity="0.85" />
       <circle className="d2" cx="512" cy="205" r="6" fill="#5DCAA5" opacity="0.85" />

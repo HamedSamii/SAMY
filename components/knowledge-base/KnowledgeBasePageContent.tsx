@@ -35,9 +35,9 @@ export function KnowledgeBasePageContent({ categories }: { categories: Category[
 
   return (
     <div className="space-y-8 py-6">
-      <h1 className="text-center text-3xl font-bold sm:text-4xl">{t.title as string}</h1>
+      <h1 className="mkt-scale-heading text-center text-3xl font-bold">{t.title as string}</h1>
       <KBSearch />
-      <div className="grid gap-4 sm:grid-cols-2 md:grid-cols-3">
+      <div className="mkt-grid-3 grid grid-cols-3 gap-4">
         {categories.map((category) => (
           <KBCategory
             key={category.id}

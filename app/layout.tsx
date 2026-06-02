@@ -34,6 +34,11 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body className="min-h-full flex flex-col">
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function(){try{localStorage.removeItem("theme");document.documentElement.removeAttribute("data-theme");}catch(e){}})();`,
+          }}
+        />
         <LanguageProvider>
           <AppShell>{children}</AppShell>
         </LanguageProvider>

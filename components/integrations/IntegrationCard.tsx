@@ -45,7 +45,7 @@ export function IntegrationCard({ integration: raw }: IntegrationCardProps) {
   return (
     <Link
       href={integration.href}
-      className="group flex h-full flex-col items-center rounded-2xl border border-white/10 bg-[var(--surface)] p-6 text-center no-underline shadow-[0_2px_12px_rgba(0,0,0,0.25)] transition-all duration-200 hover:scale-[1.02] hover:border-[var(--purple)]/40 hover:bg-[var(--surface2)] hover:shadow-[0_8px_28px_rgba(127,119,221,0.15)]"
+      className="mkt-scale-card group flex h-full min-w-0 flex-col items-center rounded-2xl border border-white/10 bg-[var(--surface)] p-6 text-center no-underline shadow-[0_2px_12px_rgba(0,0,0,0.25)] transition-all duration-200 hover:scale-[1.02] hover:border-[var(--purple)]/40 hover:bg-[var(--surface2)] hover:shadow-[0_8px_28px_rgba(127,119,221,0.15)]"
     >
       <div className="mb-4 flex h-14 w-14 items-center justify-center rounded-xl bg-white p-2 shadow-sm">
         {imageError ? (

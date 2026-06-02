@@ -4,6 +4,8 @@ import { usePathname } from "next/navigation";
 import { Nav } from "@/components/layout/Nav";
 import { Footer } from "@/components/layout/Footer";
 
+import "@/styles/marketing-mobile-layout.css";
+
 const FULL_PAGE_LANDINGS = ["/", "/features"];
 
 export function AppShell({ children }: { children: React.ReactNode }) {
@@ -32,7 +34,7 @@ export function AppShell({ children }: { children: React.ReactNode }) {
     pathname === "/contact";
 
   return (
-    <>
+    <div className="samy-marketing-site">
       <Nav />
       {isFullPageLanding ? (
         children
@@ -46,6 +48,6 @@ export function AppShell({ children }: { children: React.ReactNode }) {
         </main>
       )}
       <Footer />
-    </>
+    </div>
   );
 }

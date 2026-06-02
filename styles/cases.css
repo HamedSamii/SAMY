@@ -1042,8 +1042,8 @@
   .cases-page .filter-bar,
   .cases-page .cases-section,
   .cases-page .cta-strip {
-    padding-left: 24px;
-    padding-right: 24px;
+    padding-left: clamp(10px, 3vw, 24px);
+    padding-right: clamp(10px, 3vw, 24px);
   }
 
   .cases-page .page-hero {
@@ -1051,38 +1051,62 @@
     padding-bottom: 40px;
   }
 
+  .cases-page .page-hero h1 {
+    font-size: clamp(18px, 5vw, 36px);
+  }
+
+  .cases-page .page-hero p {
+    font-size: clamp(10px, 2.5vw, 16px);
+  }
+
   .cases-page .hero-stats {
-    gap: 24px;
+    gap: clamp(8px, 2vw, 24px);
+    flex-wrap: nowrap;
+  }
+
+  .cases-page .stat-num {
+    font-size: clamp(16px, 4vw, 28px);
+  }
+
+  .cases-page .stat-label {
+    font-size: clamp(8px, 2vw, 12px);
   }
 
   .cases-page .stats-row {
-    grid-template-columns: 1fr 1fr;
+    grid-template-columns: repeat(4, minmax(0, 1fr));
   }
 
-  .cases-page .stats-row .stat:nth-child(3) {
-    border-left: none;
-    border-top: 1px solid var(--cases-border);
+  .cases-page .stats-row .stat {
+    padding: clamp(8px, 2vw, 16px) clamp(4px, 1.5vw, 16px);
   }
 
+  .cases-page .stats-row .stat:nth-child(3),
   .cases-page .stats-row .stat:nth-child(4) {
-    border-top: 1px solid var(--cases-border);
+    border-top: none;
+    border-inline-start: 1px solid var(--cases-border);
   }
 
   .cases-page .case-card.featured {
-    grid-column: span 1;
+    grid-column: span 2;
   }
 
   .cases-page .cases-grid {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: clamp(8px, 2vw, 24px);
+  }
+
+  .cases-page .pill {
+    font-size: clamp(8px, 2vw, 12px);
+    padding: 4px 10px;
   }
 
   .cases-page .modal-metrics {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
   }
 
   .cases-page .mm + .mm {
-    border-left: none;
-    border-top: 1px solid var(--cases-border);
+    border-top: none;
+    border-inline-start: 1px solid var(--cases-border);
   }
 }
 
@@ -1286,6 +1310,7 @@
   }
 
   .cases-page .case-detail-results {
-    grid-template-columns: 1fr;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    gap: clamp(6px, 1.5vw, 16px);
   }
 }
